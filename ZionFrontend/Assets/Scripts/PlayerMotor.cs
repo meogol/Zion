@@ -1,4 +1,5 @@
 using UnityEngine;
+using Unity.Mathematics;
 
 [RequireComponent(typeof(Rigidbody))]
 public class PlayerMotor : MonoBehaviour
@@ -11,6 +12,7 @@ public class PlayerMotor : MonoBehaviour
     private Vector3 velocity = Vector3.zero;
     private Vector3 rotation = Vector3.zero;
     private Vector3 rotationCamera = Vector3.zero;
+
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -47,6 +49,8 @@ public class PlayerMotor : MonoBehaviour
     {
         rb.MoveRotation(rb.rotation * Quaternion.Euler(rotation));
         if (cam != null)
+        {
             cam.transform.Rotate(-rotationCamera);
+        }
     }
 }

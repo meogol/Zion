@@ -776,3 +776,4 @@ Received Import Request.
 Start importing Assets/Ground textures pack/Grass 02/Grass pattern 02.mat using Guid(15654a743eccf384fb2312048db767f0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b2389fbd00457a038ba371a122200c62') in 0.055644 seconds 
   Import took 0.061056 seconds .
 
+AssetImportWorkerClient::OnTransportError - code=2 error=End of file

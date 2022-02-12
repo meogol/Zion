@@ -3,7 +3,12 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - CinemachineTarget
+  - Sphere
+  - Tower
+  - Phone
+  - Sphere_1
   layers:
   - Default
   - TransparentFX

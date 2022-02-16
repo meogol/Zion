@@ -5,5 +5,6 @@ using UnityEngine;
 public enum SignalType
 {
     Mbps,
-    Gbps
+    Gbps,
+    dBm
 }

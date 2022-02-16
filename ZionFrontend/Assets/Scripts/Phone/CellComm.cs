@@ -14,6 +14,7 @@ public class CellComm : MonoBehaviour
     public TextMeshPro text { get; set; }
     public Signal signal { get; set; }
     public Dictionary<string, float> connections = new Dictionary<string, float>();
+    private int c = 299792458; //скорость света в м/с
 
     // Start is called before the first frame update
     void Start()
@@ -22,7 +23,6 @@ public class CellComm : MonoBehaviour
         text = GetComponent<TextMeshPro>();
         device = "Zion 0.0";
         signal = new Signal();
-
     }
 
     // Update is called once per frame
@@ -37,15 +37,20 @@ public class CellComm : MonoBehaviour
                 float distance = Mathf.Sqrt(vectorDistance.x * vectorDistance.x +
                     vectorDistance.y * vectorDistance.y + vectorDistance.z * vectorDistance.z);
                 connections[key] = distance;
+                
+                float AntenaPower = 10000; //мощность подаваемая на антену базовой станции
+                float f = (30+distance*2.16f)*Mathf.Pow(10, 9); //частота
+                int x = 1;//UnityEngine.Random.Range(0, 2); //изменяющаяся во времени рандомизированная переменная [0..2]
+                float powerOfTower = AntenaPower * Mathf.Pow((c / (4 * Mathf.PI * distance * f)), 2);//мощность вышки
+                float signalPower = 10 * Mathf.Log10(powerOfTower * x) + 30;//сила сигнала        
+                signal = new Signal(Convert.ToInt32(signalPower));
             }
         }
         catch (Exception e)
         {
-
+            Debug.Log(e.Message);
         }
         
-        //output = $"{device}\n\n Signal:\n {signal.speed} {signal.signalType}";
-        //Debug.Log(output);
     }
 
 }

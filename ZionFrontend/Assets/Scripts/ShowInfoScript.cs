@@ -14,7 +14,7 @@ public class ShowInfoScript : MonoBehaviour
     void Start()
     {
         text = GetComponent<TextMeshPro>();
-        input = "SAMSUKA 10E";
+        input = "Привет, мир!";
     }
 
     // Update is called once per frame

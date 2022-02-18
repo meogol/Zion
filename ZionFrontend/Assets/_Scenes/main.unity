@@ -321,10 +321,22 @@ PrefabInstance:
     - target: {fileID: 631443189338796407, guid: e6dc8feed0a186249a5fea09025ead8f, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 666842804}
+      objectReference: {fileID: 666842806}
     - target: {fileID: 631443189338796407, guid: e6dc8feed0a186249a5fea09025ead8f, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 631443189338796407, guid: e6dc8feed0a186249a5fea09025ead8f, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: Closetab
+      objectReference: {fileID: 0}
+    - target: {fileID: 631443189338796407, guid: e6dc8feed0a186249a5fea09025ead8f, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: CloseTab, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 631443189338796407, guid: e6dc8feed0a186249a5fea09025ead8f, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 1070124896153221216, guid: e6dc8feed0a186249a5fea09025ead8f, type: 3}
       propertyPath: "The\u0441amera"

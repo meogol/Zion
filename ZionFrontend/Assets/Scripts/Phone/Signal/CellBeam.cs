@@ -17,7 +17,10 @@ public class CellBeam : MonoBehaviour
     public Vector3 vectorDistance { get; set; }
     public int power { get; set; }
     public float distance { get; set; }
-    private float speed = 1000f;
+    private float speed = 5f;
+
+    [SerializeField]
+    private LayerMask mask;
 
     // Start is called before the first frame update
     void Start()
@@ -27,7 +30,7 @@ public class CellBeam : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
 
         sphereObj = GameObject.FindGameObjectWithTag("Sphere_1");
@@ -37,6 +40,24 @@ public class CellBeam : MonoBehaviour
             phone.text.text = $"{phone.device}\n\n Signal:\n {phone.signal.speed} {phone.signal.signalType}\n" +
                 $"Power:\n { phone.power} { phone.signal.signalType}\n" +
                 $"Distance:\n{phone.connections[sphere.tag]}\nCollisions:\n{collisionsCount}";
+
+            transform.position = phone.transform.position;
+
+            Shoot();
+
+
+            try
+            {
+                phone.text.text = $"{phone.device}\n\n Signal:\n {phone.signal.speed} {phone.signal.signalType}\n" +
+                    $"Power:\n { phone.signal.power} dBm\n" +
+                    $"Distance:\n{phone.connections[sphere.tag]}\nCollisions:\n{collisionsCount}";
+
+            }
+            catch (Exception e)
+            {
+
+            }
+
 
             double delay = ToCalculateDelay();
 
@@ -49,6 +70,12 @@ public class CellBeam : MonoBehaviour
         }
     }
 
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        print(collision.gameObject.name);
+    }
+
     void OnTriggerEnter(Collider other)
     {
         print("trig");
@@ -56,13 +83,24 @@ public class CellBeam : MonoBehaviour
         print(collisionsCount);
     }
 
-    void ToShoot()
+    private void Shoot()
     {
-        print("shoot");
-        collisionsCount = 0;
-        Vector3 vectorDistance = sphere.transform.position - transform.position;
-        transform.Translate(vectorDistance * speed * Time.deltaTime);
-        transform.position = phone.transform.position;
+        //print("shoot: " + transform.position);
+
+        Vector3 vectorDistance = sphere.transform.position - phoneObj.transform.position;
+        transform.Translate(sphere.transform.position);
+
+        //print("shoot: " + transform.position);
+
+
+
+        RaycastHit _hit;
+        if(Physics.Raycast(phoneObj.transform.position, vectorDistance, out _hit, 250f, mask))
+        {
+            Debug.Log(_hit.collider.name);
+        }
+
+        //print(_hit);
     }
 
     private double ToCalculateDelay()
@@ -73,7 +111,7 @@ public class CellBeam : MonoBehaviour
 
     void SendDelay(double delay)
     {
-        print(delay);
+        //print(delay);
     }
 
 

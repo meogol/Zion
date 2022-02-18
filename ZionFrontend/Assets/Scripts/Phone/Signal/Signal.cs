@@ -6,7 +6,8 @@ public class Signal
 {
     public int speed { get; set; }
     public SignalType signalType { get; set; }
-    private int c = 299792458; //скорость света в м/с
+    
+    private int c = 299792458; //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅ пїЅ/пїЅ
     private float distance { get; set; }
 
     public Signal()
@@ -22,11 +23,11 @@ public class Signal
 
     public float Power(float distance)
     {
-        float AntenaPower = 1; //мощность подаваемая на антену базовой станции
-        float f = (30 + distance * 2.16f) * Mathf.Pow(10, 9); //частота
-        int x = 1;// UnityEngine.Random.Range(0, 2); //изменяющаяся во времени рандомизированная переменная [0..2]
-        float powerOfTower = AntenaPower * Mathf.Pow((c / (4 * Mathf.PI * distance * f)), 2);//мощность вышки
-        float signalPower = 10 * Mathf.Log10(powerOfTower * x) + 30;//сила сигнала
+        float AntenaPower = 1; //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+        float f = (30 + distance * 2.16f) * Mathf.Pow(10, 9); //пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+        int x = 1;// UnityEngine.Random.Range(0, 2); //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ [0..2]
+        float powerOfTower = AntenaPower * Mathf.Pow((c / (4 * Mathf.PI * distance * f)), 2);//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
+        float signalPower = 10 * Mathf.Log10(powerOfTower * x) + 30;//пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
         this.signalType = SignalType.dBm;
 
         return signalPower;

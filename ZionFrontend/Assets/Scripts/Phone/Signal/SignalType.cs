@@ -6,5 +6,5 @@ public enum SignalType
 {
     Mbps,
     Gbps,
-    dBm
+    bps
 }

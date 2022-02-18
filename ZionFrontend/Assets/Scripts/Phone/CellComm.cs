@@ -12,6 +12,7 @@ public class CellComm : MonoBehaviour
     public String device { get; set; }
     public String output { get; set; }
     public TextMeshPro text { get; set; }
+    public int power { get; set; }
     public Signal signal { get; set; }
     public Dictionary<string, float> connections = new Dictionary<string, float>();
 
@@ -36,7 +37,9 @@ public class CellComm : MonoBehaviour
                 float distance = Mathf.Sqrt(vectorDistance.x * vectorDistance.x +
                     vectorDistance.y * vectorDistance.y + vectorDistance.z * vectorDistance.z);
                 connections[key] = distance;
-                signal.Power(distance);
+                
+
+                this.power = System.Convert.ToInt32(signal.Power(distance));
             }
         }
         catch (Exception e)

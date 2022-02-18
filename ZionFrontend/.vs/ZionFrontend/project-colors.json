@@ -10,7 +10,12 @@
       "ProjectGuid": "a5833caa-1af6-1847-d140-88cf8ebd850c",
       "DisplayName": "Assembly-CSharp",
       "ColorIndex": 0
+    },
+    "3e9fd457-d4a3-4cdd-884d-35ed4b26eb88": {
+      "ProjectGuid": "3e9fd457-d4a3-4cdd-884d-35ed4b26eb88",
+      "DisplayName": "Assembly-CSharpTests1",
+      "ColorIndex": 1
     }
   },
-  "NextColorIndex": 1
+  "NextColorIndex": 2
 }

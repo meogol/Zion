@@ -15,6 +15,7 @@ public class CellBeam : MonoBehaviour
     public int collisionsCount { get; set; }
     public Vector3 towerLocation { get; set; }
     public Vector3 vectorDistance { get; set; }
+    public int power { get; set; }
     public float distance { get; set; }
     private float speed = 1000f;
 
@@ -34,7 +35,7 @@ public class CellBeam : MonoBehaviour
         {
             ToShoot();
             phone.text.text = $"{phone.device}\n\n Signal:\n {phone.signal.speed} {phone.signal.signalType}\n" +
-                $"Power:\n { phone.signal.power} { phone.signal.signalType}\n" +
+                $"Power:\n { phone.power} { phone.signal.signalType}\n" +
                 $"Distance:\n{phone.connections[sphere.tag]}\nCollisions:\n{collisionsCount}";
 
             double delay = ToCalculateDelay();

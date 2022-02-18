@@ -7,6 +7,7 @@ public class Signal
     public int speed { get; set; }
     public int power { get; set; }
     public SignalType signalType { get; set; }
+    
     private int c = 299792458; //скорость света в м/с
     private float distance { get; set; }
 
@@ -29,7 +30,7 @@ public class Signal
         float powerOfTower = AntenaPower * Mathf.Pow((c / (4 * Mathf.PI * distance * f)), 2);//мощность вышки
         float signalPower = 10 * Mathf.Log10(powerOfTower * x) + 30;//сила сигнала
         this.power = System.Convert.ToInt32(signalPower);
-        this.signalType = SignalType.dBm;
+        this.signalType = SignalType.Mbps;
     }
 
 }

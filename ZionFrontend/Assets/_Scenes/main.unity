@@ -298,6 +298,23 @@ Camera:
   m_CorrespondingSourceObject: {fileID: 3274157332032524006, guid: e6dc8feed0a186249a5fea09025ead8f, type: 3}
   m_PrefabInstance: {fileID: 2115966072}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &2001947327 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6897840450285740632, guid: e6dc8feed0a186249a5fea09025ead8f, type: 3}
+  m_PrefabInstance: {fileID: 2115966072}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2001947328
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2001947327}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e7baa4bd7ab8edf4db2094c9f34207b6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!20 &2080559556 stripped
 Camera:
   m_CorrespondingSourceObject: {fileID: 8645295494484038551, guid: e6dc8feed0a186249a5fea09025ead8f, type: 3}
@@ -370,6 +387,10 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
+    - target: {fileID: 1194971045372492565, guid: e6dc8feed0a186249a5fea09025ead8f, type: 3}
+      propertyPath: m_text
+      value: "\u041F\u0440\u0438\u0432\u0435\u0442, \u043C\u0438\u0440!"
+      objectReference: {fileID: 0}
     - target: {fileID: 1874082015419681429, guid: e6dc8feed0a186249a5fea09025ead8f, type: 3}
       propertyPath: m_Name
       value: Main Camera
@@ -434,5 +455,6 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 7263032215061055151, guid: e6dc8feed0a186249a5fea09025ead8f, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: e6dc8feed0a186249a5fea09025ead8f, type: 3}

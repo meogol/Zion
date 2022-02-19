@@ -1,2 +1,14 @@
 
 *.meta
+
+Temp/
+
+Library/
+
+*.sln
+
+*.csproj
+
+.vsconfig
+
+Logs/

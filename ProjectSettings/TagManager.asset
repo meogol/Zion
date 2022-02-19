@@ -11,14 +11,15 @@ TagManager:
   - Sphere
   - Undefined
   - Sphere_1
+  - Building
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Building
   - Water
   - UI
-  - 
+  - Tower
   - 
   - 
   - 

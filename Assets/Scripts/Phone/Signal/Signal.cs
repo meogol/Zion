@@ -47,6 +47,14 @@ public class Signal
                 {
                     netIndexator += "<color=green>Ï</color>";
                 }
+                else
+                {
+                    netIndexator += "<color=grey>Ï</color>";
+                }
+            }
+            else
+            {
+                netIndexator += "<color=grey>ïÏ</color>";
             }
         }
         else

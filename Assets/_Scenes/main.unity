@@ -409,6 +409,14 @@ PrefabInstance:
       propertyPath: m_text
       value: "\u041F\u0440\u0438\u0432\u0435\u0442, \u043C\u0438\u0440!"
       objectReference: {fileID: 0}
+    - target: {fileID: 1194971045372492565, guid: e6dc8feed0a186249a5fea09025ead8f, type: 3}
+      propertyPath: m_fontStyle
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1194971045372492565, guid: e6dc8feed0a186249a5fea09025ead8f, type: 3}
+      propertyPath: m_HorizontalAlignment
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1874082015419681429, guid: e6dc8feed0a186249a5fea09025ead8f, type: 3}
       propertyPath: m_Name
       value: Main Camera
@@ -483,4 +491,5 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 7263032215061055151, guid: e6dc8feed0a186249a5fea09025ead8f, type: 3}
+    - {fileID: 4550282863202384321, guid: e6dc8feed0a186249a5fea09025ead8f, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: e6dc8feed0a186249a5fea09025ead8f, type: 3}

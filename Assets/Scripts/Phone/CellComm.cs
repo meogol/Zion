@@ -7,7 +7,7 @@ using System.Linq;
 
 public class CellComm : MonoBehaviour
 {
-    public const String DEFAULT_TEXT = "Zion 0.0\n\nNo connection...";
+    public const String DEFAULT_TEXT = "<color=red>no signal...</color>\n________________Zion 0.0\n\nNo connection...";
     public GameObject obj;
     public GameObject tower;
     public String device { get; set; }
@@ -37,8 +37,6 @@ public class CellComm : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
-
         CellBeam();
 
         CheckSignal();
@@ -76,8 +74,8 @@ public class CellComm : MonoBehaviour
 
             try
             {
-                text.text = $"{device}\n\n Signal:\n {signal.speed} {signal.signalType}\n\n" +
-                     $"Power:\n {signal.power} dBm\n\n" +
+                text.text = $"{signal.GetNetIndexator()}\t {signal.power} dBm\n________________\n" +
+                    $"{device}\nSignal:\n {signal.speed} {signal.signalType}\n\n" +
                      $"Distance:\n{connections[sphere.tag]}\n\nCollisions:\n{collisionsCount}";
                 
             }

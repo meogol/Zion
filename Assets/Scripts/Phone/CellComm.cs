@@ -18,7 +18,9 @@ public class CellComm : MonoBehaviour
 
     public int collisionsCount { get; set; }
     public GameObject sphereObj;
+    public GameObject cellTower;
     public CellSphere sphere;
+    [SerializeField]
     private LayerMask mask;
 
     // Start is called before the first frame update
@@ -32,10 +34,12 @@ public class CellComm : MonoBehaviour
         signal = new Signal();
 
         text.text = DEFAULT_TEXT;
+
+
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         CellBeam();
 
@@ -70,7 +74,8 @@ public class CellComm : MonoBehaviour
         sphereObj = GameObject.FindGameObjectWithTag("Sphere_1");
         if (connections.ContainsKey(sphereObj.tag))
         {
-            Shoot();
+            collisionsCount = 0;
+            Shoot(transform.position);
 
             try
             {
@@ -96,18 +101,38 @@ public class CellComm : MonoBehaviour
         }
     }
 
-    private void Shoot()
+    private void Shoot(Vector3 position)
     {
-        Vector3 vectorDistance = sphere.transform.position - transform.position;
-        
+
+        cellTower = GameObject.FindGameObjectWithTag("Tower");
+        Vector3 vectorDistance = tower.transform.position - position;
+
         RaycastHit _hit;
-        if (Physics.Raycast(transform.position, vectorDistance, out _hit, 500f, mask))
+
+        if (Physics.Raycast(position, vectorDistance, out _hit, 1000f, mask))
         {
-            Debug.Log(_hit.collider.name);
+            if (_hit.collider.tag == "Building")
+            {
+                collisionsCount++;
+
+                Debug.Log("Building...\t" + collisionsCount);
+                Debug.Log(position + "\t" + tower.transform.position);
+
+                vectorDistance = tower.transform.position - _hit.point;
+
+                position = _hit.point + (vectorDistance
+                            / (Math.Max(vectorDistance.x, Math.Max(vectorDistance.y, vectorDistance.z))));
+                Debug.Log("New Pos:\t" + position);
+                Shoot(position);
+            }
+            else if(_hit.collider.tag == "Tower")
+            {
+                Debug.Log("TOWER!\t" + collisionsCount + "\t" + _hit.collider.name);
+            }
         }
-
+        
+        
     }
-
 
 
     private double ToCalculateDelay()

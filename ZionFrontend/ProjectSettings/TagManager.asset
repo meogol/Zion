@@ -5,6 +5,12 @@ TagManager:
   serializedVersion: 2
   tags:
   - Cam
+  - CinemachineTarget
+  - Phone
+  - Tower
+  - Sphere
+  - Undefined
+  - Sphere_1
   layers:
   - Default
   - TransparentFX

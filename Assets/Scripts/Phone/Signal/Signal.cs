@@ -33,4 +33,37 @@ public class Signal
         this.signalType = SignalType.Mbps;
     }
 
+    public string GetNetIndexator()
+    {
+        string netIndexator = "";
+
+        if(power >= -120)
+        {
+            netIndexator += "<color=green>.</color>";
+            if(power >= -100)
+            {
+                netIndexator += "<color=green>ï</color>";
+                if(power >= -70)
+                {
+                    netIndexator += "<color=green>Ï</color>";
+                }
+                else
+                {
+                    netIndexator += "<color=grey>Ï</color>";
+                }
+            }
+            else
+            {
+                netIndexator += "<color=grey>ïÏ</color>";
+            }
+        }
+        else
+        {
+            netIndexator += "<color=red>no signal...</color>";
+        }
+
+        return netIndexator;
+    }
+
+
 }

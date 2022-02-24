@@ -25,9 +25,9 @@ public class Signal
 
     public void Power(float distance, int collision)
     {
-        int AntenaPower = 1; //мощность подаваемая на антену базовой станции
+        int AntenaPower = 40000; //мощность подаваемая на антену базовой станции
         float f = (30 + distance * 0.54f) * Mathf.Pow(10, 9); //частота
-        int x = 1;// UnityEngine.Random.Range(0, 2); //изменяющаяся во времени рандомизированная переменная [0..2]
+        int x = 2;// UnityEngine.Random.Range(0, 2); //изменяющаяся во времени рандомизированная переменная [0..2]
         float powerOfTower = AntenaPower * Mathf.Pow((c / (4 * Mathf.PI * distance * f)), 2);//мощность вышки
 
         float A = 1, B = 0;//коэффициенты для потерь, где А=5 и В=0.03 для низкой задержки,
@@ -45,7 +45,7 @@ public class Signal
         }
         float Bpl = 10 * Mathf.Log10(A + B * Mathf.Pow((f / Mathf.Pow(10, 9)), 2));//потеря сигнала в зависимости от количества колизий
 
-        float signalPower = 10 * Mathf.Log10(powerOfTower * x) + 30 - Bpl;//сила сигнала
+        float signalPower = 15 * Mathf.Log10( powerOfTower * x) + 30 - Bpl;//сила сигнала
 
         this.power = System.Convert.ToInt32(signalPower);
     }

@@ -23,10 +23,13 @@ public class Signal
         return speed + "\t" + signalType;
     }
 
-    public void Power(float distance, int collision)
+    public void Power(float distance, int collision, float radius)
     {
         int AntenaPower = 40000; //мощность подаваемая на антену базовой станции
-        float f = (30 + distance * 0.54f) * Mathf.Pow(10, 9); //частота
+        float minHz = 30;
+        float maxHz = 300;
+        float coefficient = - (minHz - maxHz) / radius;
+        float f = (30 + distance * coefficient) * Mathf.Pow(10, 9); //частота
         int x = 2;// UnityEngine.Random.Range(0, 2); //изменяющаяся во времени рандомизированная переменная [0..2]
         float powerOfTower = AntenaPower * Mathf.Pow((c / (4 * Mathf.PI * distance * f)), 2);//мощность вышки
 

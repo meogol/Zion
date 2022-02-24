@@ -7,7 +7,7 @@ using System.Linq;
 
 public class CellComm : MonoBehaviour
 {
-    public const String DEFAULT_TEXT = "<color=red>no signal...</color>\n________________Zion 0.0\n\nNo connection...";
+    public const String DEFAULT_TEXT = "<color=red>no signal...</color>\n\n___________\n\nZion 0.0\n\nNo connection...";
     public GameObject obj;
     public GameObject tower;
     public String device { get; set; }
@@ -60,7 +60,8 @@ public class CellComm : MonoBehaviour
                                             vectorDistance.y * vectorDistance.y + 
                                             vectorDistance.z * vectorDistance.z);
                 connections[key] = distance;
-                signal.Power(distance, collisionsCount);
+                float radius = tower.transform.localScale.x/2;
+                signal.Power(distance, collisionsCount, radius);
             }
         }
         catch (Exception e)
@@ -79,8 +80,8 @@ public class CellComm : MonoBehaviour
 
             try
             {
-                text.text = $"{signal.GetNetIndexator()}\t {signal.power} dBm\n________________\n" +
-                    $"{device}\nSignal:\n {signal.speed} {signal.signalType}\n\n" +
+                text.text = $"{signal.GetNetIndexator()}\n{signal.power} dBm\n___________\n\n" +
+                    $"{device}\n\nSignal:\n {signal.speed} {signal.signalType}\n\n" +
                      $"Distance:\n{connections[sphere.tag]}\n\nCollisions:\n{collisionsCount}";
                 
             }

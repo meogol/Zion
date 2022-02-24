@@ -60,7 +60,7 @@ public class CellComm : MonoBehaviour
                                             vectorDistance.y * vectorDistance.y + 
                                             vectorDistance.z * vectorDistance.z);
                 connections[key] = distance;
-                signal.Power(distance);
+                signal.Power(distance, collisionsCount);
             }
         }
         catch (Exception e)

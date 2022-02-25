@@ -4,43 +4,52 @@ using UnityEngine;
 
 public class CellSphere : MonoBehaviour
 {
-    public const int DEFAULT_COUNT_OF_USRES = 666;
-    public int countOfUsers;
     public GameObject obj;
-    public GameObject phoneObj;
-    public CellComm phone;
+    public List<CellComm> conectedPhones;
 
     // Start is called before the first frame update
     void Start()
     {
-        phoneObj = GameObject.FindGameObjectWithTag("Phone");
-
-
+        obj = GameObject.Find("Sphere_1");
+        addConnection(GameObject.Find("PhoneText_1"));
+        addConnection(GameObject.Find("PhoneText_2"));
     }
 
     // Update is called once per frame
     void Update()
     {
-        countOfUsers = DEFAULT_COUNT_OF_USRES;
     }
 
     void OnTriggerEnter(Collider other)
     {
-        if (!phone.connections.ContainsKey(obj.tag))
-        {
-            Vector3 vectorDistance = obj.transform.position - phoneObj.transform.position;
-            float distance = Mathf.Sqrt(vectorDistance.x * vectorDistance.x + 
-                vectorDistance.y * vectorDistance.y + vectorDistance.z * vectorDistance.z);
-            phone.connections.Add(obj.tag, distance);
-            countOfUsers++;
-        }
+        addConnection(other.gameObject);
     }
     private void OnTriggerExit(Collider other)
     {
+        removeConnection(other.gameObject);
+    }
+
+    private void addConnection(GameObject phoneObject)
+    {
+        CellComm phone = phoneObject.GetComponent<CellComm>();
+        if (!phone.connections.ContainsKey(obj.tag))
+        {
+            Vector3 vectorDistance = obj.transform.position - phoneObject.transform.position;
+            float distance = Mathf.Sqrt(vectorDistance.x * vectorDistance.x +
+                vectorDistance.y * vectorDistance.y + vectorDistance.z * vectorDistance.z);
+            phone.connections.Add(obj.tag, distance);
+            conectedPhones.Add(phone);
+        }
+    }
+
+    private void removeConnection(GameObject phoneObject)
+    {
+        CellComm phone = phoneObject.GetComponent<CellComm>();
         if (phone.connections.ContainsKey(obj.tag))
         {
             phone.connections.Remove(obj.tag);
-            countOfUsers--;
+            conectedPhones.Remove(phone);
+
         }
     }
 

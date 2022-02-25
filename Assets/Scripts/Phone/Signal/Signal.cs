@@ -23,7 +23,7 @@ public class Signal
         return speed + "\t" + signalType;
     }
 
-    public void Power(float distance, int collision, float radius)
+    public void Power(float distance, int collision, float radius, int countOfUsers)
     {
         int AntenaPower = 40000; //мощность подаваемая на антену базовой станции
         float minHz = 30;
@@ -51,6 +51,14 @@ public class Signal
         float signalPower = 15 * Mathf.Log10( powerOfTower * x) + 30 - Bpl;//сила сигнала
 
         this.power = System.Convert.ToInt32(signalPower);
+
+
+        if(countOfUsers > 256)
+        {
+            this.power -= System.Convert.ToInt32(0.2 * countOfUsers);
+        }
+
+
     }
 
     public string GetNetIndexator()

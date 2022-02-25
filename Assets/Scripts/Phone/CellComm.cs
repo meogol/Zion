@@ -61,7 +61,10 @@ public class CellComm : MonoBehaviour
                                             vectorDistance.z * vectorDistance.z);
                 connections[key] = distance;
                 float radius = tower.transform.localScale.x/2;
-                signal.Power(distance, collisionsCount, radius);
+                signal.Power(distance, collisionsCount, radius, tower.GetComponent<CellSphere>().conectedPhones.Count);
+                //signal.Power(distance, collisionsCount, radius, 512);
+                //signal.Power(distance, collisionsCount, radius, 256);
+                //signal.Power(distance, collisionsCount, radius, 280);
             }
         }
         catch (Exception e)

@@ -71,7 +71,6 @@ public class CellComm : MonoBehaviour
     }
     private void CellBeam()
     {
-        
         sphereObj = GameObject.FindGameObjectWithTag("Sphere_1");
         if (connections.ContainsKey(sphereObj.tag))
         {
@@ -115,20 +114,14 @@ public class CellComm : MonoBehaviour
             if (_hit.collider.tag == "Building")
             {
                 collisionsCount++;
-
-                Debug.Log("Building...\t" + collisionsCount);
-                Debug.Log(position + "\t" + tower.transform.position);
-
                 vectorDistance = tower.transform.position - _hit.point;
 
                 position = _hit.point + (vectorDistance
                             / (Math.Max(vectorDistance.x, Math.Max(vectorDistance.y, vectorDistance.z))));
-                Debug.Log("New Pos:\t" + position);
                 Shoot(position);
             }
             else if(_hit.collider.tag == "Tower")
             {
-                Debug.Log("TOWER!\t" + collisionsCount + "\t" + _hit.collider.name);
             }
         }
         

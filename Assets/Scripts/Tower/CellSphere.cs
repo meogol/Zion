@@ -22,15 +22,21 @@ public class CellSphere : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        addConnection(other.gameObject);
+        if(other.tag == "Phone")
+        {
+            addConnection(other.gameObject);
+        }
     }
     private void OnTriggerExit(Collider other)
     {
-        removeConnection(other.gameObject);
+        if (other.tag == "Phone")
+        {
+            removeConnection(other.gameObject);
+        }
     }
 
     private void addConnection(GameObject phoneObject)
-    {
+    {   
         CellComm phone = phoneObject.GetComponent<CellComm>();
         if (!phone.connections.ContainsKey(obj.tag))
         {

@@ -10,8 +10,12 @@ public class CellSphere : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        /*
+         * Добавление телефонов
+         *
         addConnection(GameObject.Find("PhoneText_1"));
         addConnection(GameObject.Find("PhoneText_2"));
+        */
     }
 
     // Update is called once per frame

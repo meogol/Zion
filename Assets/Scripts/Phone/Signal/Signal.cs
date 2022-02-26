@@ -10,7 +10,7 @@ public class Signal
     public SignalType signalType { get; set; }
 
     private int c = 299792458; //скорость света в м/с
-    private float distance { get; set; }
+    public float distance { get; set; }
 
     public Signal()
     {
@@ -25,6 +25,7 @@ public class Signal
 
     public void Power(float distance, int collision, float radius, int countOfUsers)
     {
+        this.distance = distance;
         int AntenaPower = 40000; //мощность подаваемая на антену базовой станции
         float minHz = 30;
         float maxHz = 300;

@@ -10,7 +10,6 @@ public class CellSphere : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        obj = GameObject.Find("Sphere_1");
         addConnection(GameObject.Find("PhoneText_1"));
         addConnection(GameObject.Find("PhoneText_2"));
     }
@@ -22,22 +21,28 @@ public class CellSphere : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        addConnection(other.gameObject);
+        if(other.tag == "Phone")
+        {
+            addConnection(other.gameObject);
+        }
     }
     private void OnTriggerExit(Collider other)
     {
-        removeConnection(other.gameObject);
+        if (other.tag == "Phone")
+        {
+            removeConnection(other.gameObject);
+        }
     }
 
     private void addConnection(GameObject phoneObject)
-    {
+    {   
         CellComm phone = phoneObject.GetComponent<CellComm>();
-        if (!phone.connections.ContainsKey(obj.tag))
+        if (!phone.connections.ContainsKey(obj.name))
         {
             Vector3 vectorDistance = obj.transform.position - phoneObject.transform.position;
             float distance = Mathf.Sqrt(vectorDistance.x * vectorDistance.x +
                 vectorDistance.y * vectorDistance.y + vectorDistance.z * vectorDistance.z);
-            phone.connections.Add(obj.tag, distance);
+            phone.connections.Add(obj.name, distance);
             conectedPhones.Add(phone);
         }
     }
@@ -45,9 +50,9 @@ public class CellSphere : MonoBehaviour
     private void removeConnection(GameObject phoneObject)
     {
         CellComm phone = phoneObject.GetComponent<CellComm>();
-        if (phone.connections.ContainsKey(obj.tag))
+        if (phone.connections.ContainsKey(obj.name))
         {
-            phone.connections.Remove(obj.tag);
+            phone.connections.Remove(obj.name);
             conectedPhones.Remove(phone);
 
         }

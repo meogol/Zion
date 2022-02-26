@@ -7,7 +7,7 @@ using System.Linq;
 
 public class CellComm : MonoBehaviour
 {
-    public const String DEFAULT_TEXT = "<color=red>no signal...</color>\n\n___________\n\nZion 0.0\n\nNo connection...";
+    public const String DEFAULT_TEXT = "<color=red>no signal...</color>\n\n_____________\nZion 0.0\n\nNo connection...";
     public GameObject obj;
     public GameObject tower;
     public String device { get; set; }
@@ -18,7 +18,6 @@ public class CellComm : MonoBehaviour
 
     public int collisionsCount { get; set; }
     public GameObject sphereObj;
-    public GameObject cellTower;
     public CellSphere sphere;
     [SerializeField]
     private LayerMask mask;
@@ -47,6 +46,28 @@ public class CellComm : MonoBehaviour
     }
 
 
+    public void CheckConnectedTower()
+    {
+        try
+        {
+            float maxPower = connections.Values.ToList()[0];
+            string minKey = connections.Keys.ToList()[0];
+            foreach (var key in connections.Keys.ToList())
+            {
+                if(connections[key] > maxPower)
+                {
+                    maxPower = connections[key];
+                    minKey = key;
+                }
+            }
+
+            sphereObj = GameObject.Find(minKey);
+        }
+        catch (Exception e)
+        {
+            Debug.Log(e);
+        }
+    }
 
     private void CheckSignal()
     {
@@ -54,14 +75,14 @@ public class CellComm : MonoBehaviour
         {
             foreach (var key in connections.Keys.ToList())
             {
-                tower = GameObject.FindGameObjectWithTag(key);
+                tower = GameObject.Find(key);
                 Vector3 vectorDistance = tower.transform.position - transform.position;
                 float distance = Mathf.Sqrt(vectorDistance.x * vectorDistance.x +
                                             vectorDistance.y * vectorDistance.y + 
                                             vectorDistance.z * vectorDistance.z);
-                connections[key] = distance;
                 float radius = tower.transform.localScale.x/2;
-                signal.Power(distance, collisionsCount, radius);
+                signal.Power(distance, collisionsCount, radius, tower.GetComponent<CellSphere>().conectedPhones.Count);
+                connections[key] = signal.power;
             }
         }
         catch (Exception e)
@@ -71,17 +92,25 @@ public class CellComm : MonoBehaviour
     }
     private void CellBeam()
     {
-        sphereObj = GameObject.FindGameObjectWithTag("Sphere_1");
-        if (connections.ContainsKey(sphereObj.tag))
+        if (connections.Count != 0)
         {
+            if(connections.Count > 1)
+            {
+                CheckConnectedTower();
+            }
+            else
+            {
+                sphereObj = GameObject.Find(connections.Keys.ToList()[0]);
+            }
+            
             collisionsCount = 0;
             Shoot(transform.position);
 
             try
             {
-                text.text = $"{signal.GetNetIndexator()}\n{signal.power} dBm\n___________\n\n" +
+                text.text = $"{signal.GetNetIndexator()}\n{signal.power} dBm\n_____________\n" +
                     $"{device}\n\nSignal:\n {signal.speed} {signal.signalType}\n\n" +
-                     $"Distance:\n{connections[sphere.tag]}\n\nCollisions:\n{collisionsCount}";
+                     $"Distance to the {sphereObj.name}:\n{signal.distance}\n\nCollisions:\n{collisionsCount}";
                 
             }
             catch (Exception e)
@@ -104,8 +133,7 @@ public class CellComm : MonoBehaviour
     private void Shoot(Vector3 position)
     {
 
-        cellTower = GameObject.FindGameObjectWithTag("Tower");
-        Vector3 vectorDistance = tower.transform.position - position;
+        Vector3 vectorDistance = sphereObj.transform.position - position;
 
         RaycastHit _hit;
 
@@ -114,14 +142,11 @@ public class CellComm : MonoBehaviour
             if (_hit.collider.tag == "Building")
             {
                 collisionsCount++;
-                vectorDistance = tower.transform.position - _hit.point;
+                vectorDistance = sphereObj.transform.position - _hit.point;
 
                 position = _hit.point + (vectorDistance
                             / (Math.Max(vectorDistance.x, Math.Max(vectorDistance.y, vectorDistance.z))));
                 Shoot(position);
-            }
-            else if(_hit.collider.tag == "Tower")
-            {
             }
         }
         

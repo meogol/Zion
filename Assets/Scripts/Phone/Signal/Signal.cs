@@ -10,7 +10,7 @@ public class Signal
     public SignalType signalType { get; set; }
 
     private int c = 299792458; //скорость света в м/с
-    private float distance { get; set; }
+    public float distance { get; set; }
 
     public Signal()
     {
@@ -23,8 +23,9 @@ public class Signal
         return speed + "\t" + signalType;
     }
 
-    public void Power(float distance, int collision, float radius)
+    public void Power(float distance, int collision, float radius, int countOfUsers)
     {
+        this.distance = distance;
         int AntenaPower = 40000; //мощность подаваемая на антену базовой станции
         float minHz = 30;
         float maxHz = 300;
@@ -51,6 +52,14 @@ public class Signal
         float signalPower = 15 * Mathf.Log10( powerOfTower * x) + 30 - Bpl;//сила сигнала
 
         this.power = System.Convert.ToInt32(signalPower);
+
+
+        if(countOfUsers > 256)
+        {
+            this.power -= System.Convert.ToInt32(0.2 * countOfUsers);
+        }
+
+
     }
 
     public string GetNetIndexator()

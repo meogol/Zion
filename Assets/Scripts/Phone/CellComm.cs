@@ -51,17 +51,17 @@ public class CellComm : MonoBehaviour
         try
         {
             float maxPower = connections.Values.ToList()[0];
-            string minKey = connections.Keys.ToList()[0];
+            string maxKey = connections.Keys.ToList()[0];
             foreach (var key in connections.Keys.ToList())
             {
                 if(connections[key] > maxPower)
                 {
                     maxPower = connections[key];
-                    minKey = key;
+                    maxKey = key;
                 }
             }
 
-            sphereObj = GameObject.Find(minKey);
+            sphereObj = GameObject.Find(maxKey);
         }
         catch (Exception e)
         {

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 
 public class Signal
@@ -12,10 +13,25 @@ public class Signal
     private int c = 299792458; //скорость света в м/с
     public float distance { get; set; }
 
+
+
+    public ThrottledStream stream { get; set; }
+
+    //private const int MAX_BPS = 1342177280;
+
+    Stream parentStream;
+
+
+
     public Signal()
     {
         speed = 0;
         signalType = SignalType.Mbps;
+
+        // —оздание потока с возможными изменени€ми скорости
+        // parentStream - поток данных
+        stream = new ThrottledStream(parentStream, speed);
+
     }
 
     public string getSignal()
@@ -60,7 +76,18 @@ public class Signal
         }
 
 
+        // ƒќЋ∆Ќј ћ≈Ќя“—я — ќ–ќ—“№ —»√ЌјЋј!!!
+
+        ChangeMaxBPS(speed);
+
+
     }
+
+    public void ChangeMaxBPS(int bps)
+    {
+        stream.MaxBytesPerSecond = bps;
+    }
+
 
     public string GetNetIndexator()
     {

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 
 public class Signal
@@ -9,13 +10,28 @@ public class Signal
     public int collisionsCount { get; set; }
     public SignalType signalType { get; set; }
 
-    private int c = 299792458; //скорость света в м/с
+    private int c = 299792458; //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅ пїЅ/пїЅ
     public float distance { get; set; }
+
+
+
+    public ThrottledStream stream { get; set; }
+
+    //private const int MAX_BPS = 1342177280;
+
+    Stream parentStream;
+
+
 
     public Signal()
     {
         speed = 0;
         signalType = SignalType.Mbps;
+
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+        // parentStream - пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
+        stream = new ThrottledStream(parentStream, speed);
+
     }
 
     public string getSignal()
@@ -26,16 +42,16 @@ public class Signal
     public int Power(float distance, int collision, float radius, int countOfUsers)
     {
         this.distance = distance;
-        int AntenaPower = 40000; //мощность подаваемая на антену базовой станции
+        int AntenaPower = 40000; //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
         float minHz = 30;
         float maxHz = 300;
         float coefficient = - (minHz - maxHz) / radius;
-        float f = (30 + distance * coefficient) * Mathf.Pow(10, 9); //частота
-        int x = 2; // TODO: изменяющаяся во времени рандомизированная переменная (0..2], возможно придется сделать через Random()
-        float powerOfTower = AntenaPower * Mathf.Pow((c / (4 * Mathf.PI * distance * f)), 2);//мощность вышки
+        float f = (30 + distance * coefficient) * Mathf.Pow(10, 9); //пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+        int x = 2; // TODO: пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ (0..2], пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ Random()
+        float powerOfTower = AntenaPower * Mathf.Pow((c / (4 * Mathf.PI * distance * f)), 2);//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
 
-        float A = 1, B = 0;//коэффициенты для потерь, где А=5 и В=0.03 для низкой задержки,
-                           //а А=10 и В=5 для высокой
+        float A = 1, B = 0;//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅ пїЅ=5 пїЅ пїЅ=0.03 пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ,
+                           //пїЅ пїЅ=10 пїЅ пїЅ=5 пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 
         if ((collision >= 1) & (collision < 2))
         {
@@ -47,9 +63,9 @@ public class Signal
             A = 10;
             B = 5;
         }
-        float Bpl = 10 * Mathf.Log10(A + B * Mathf.Pow((f / Mathf.Pow(10, 9)), 2));//потеря сигнала в зависимости от количества колизий
+        float Bpl = 10 * Mathf.Log10(A + B * Mathf.Pow((f / Mathf.Pow(10, 9)), 2));//пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 
-        float signalPower = 15 * Mathf.Log10( powerOfTower * x) + 30 - Bpl;//сила сигнала
+        float signalPower = 15 * Mathf.Log10( powerOfTower * x) + 30 - Bpl;//пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 
 
 
@@ -58,8 +74,19 @@ public class Signal
             this.power -= System.Convert.ToInt32(0.2 * countOfUsers);
         }
 
-        return System.Convert.ToInt32(signalPower);
+
+        // пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ!!!
+
+        ChangeMaxBPS(speed);
+
+
     }
+
+    public void ChangeMaxBPS(int bps)
+    {
+        stream.MaxBytesPerSecond = bps;
+    }
+
 
     public string GetNetIndexator()
     {
@@ -70,19 +97,19 @@ public class Signal
             netIndexator += "<color=green>.</color>";
             if(power >= -100)
             {
-                netIndexator += "<color=green>п</color>";
+                netIndexator += "<color=green>пїЅ</color>";
                 if(power >= -70)
                 {
-                    netIndexator += "<color=green>П</color>";
+                    netIndexator += "<color=green>пїЅ</color>";
                 }
                 else
                 {
-                    netIndexator += "<color=grey>П</color>";
+                    netIndexator += "<color=grey>пїЅ</color>";
                 }
             }
             else
             {
-                netIndexator += "<color=grey>пП</color>";
+                netIndexator += "<color=grey>пїЅпїЅ</color>";
             }
         }
         else

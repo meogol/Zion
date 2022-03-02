@@ -8,7 +8,7 @@ public class TestSuite
 {
     public Signal signal { get; set; }
     [Test]
-    public void TestPowerSignal()
+    public void TestPowerSignalWithoutCollision()
     {
         signal = new Signal();
         float distance = 6;

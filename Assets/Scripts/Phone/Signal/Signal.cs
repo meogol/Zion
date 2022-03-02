@@ -31,7 +31,7 @@ public class Signal
         float maxHz = 300;
         float coefficient = - (minHz - maxHz) / radius;
         float f = (30 + distance * coefficient) * Mathf.Pow(10, 9); //частота
-        int x = 2;// UnityEngine.Random.Range(0, 2); //изменяющаяся во времени рандомизированная переменная [0..2]
+        int x = 2; // TODO: изменяющаяся во времени рандомизированная переменная (0..2], возможно придется сделать через Random()
         float powerOfTower = AntenaPower * Mathf.Pow((c / (4 * Mathf.PI * distance * f)), 2);//мощность вышки
 
         float A = 1, B = 0;//коэффициенты для потерь, где А=5 и В=0.03 для низкой задержки,

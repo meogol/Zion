@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using System.Threading;
 using System.Timers;
+using UnityEngine;
 
 public class ThrottledStream : Stream
 {
@@ -59,8 +60,9 @@ public class ThrottledStream : Stream
             if (processed >= maxBytesPerSecond)
                 wh.WaitOne();
         }
-        catch
+        catch (Exception e)
         {
+            Debug.LogError(e.Message);
         }
     }
 

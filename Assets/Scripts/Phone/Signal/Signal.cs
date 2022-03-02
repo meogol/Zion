@@ -1,7 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+
 
 public class Signal
 {
@@ -11,7 +10,7 @@ public class Signal
     public SignalType signalType { get; set; }
 
     private int c = 299792458; //�������� ����� � �/�
-    public float distance { get; set; }
+    private float distance { get; set; }
 
 
 
@@ -19,7 +18,6 @@ public class Signal
 
     //private const int MAX_BPS = 1342177280;
 
-    Stream parentStream;
 
 
 
@@ -28,9 +26,9 @@ public class Signal
         speed = 0;
         signalType = SignalType.Mbps;
 
-        // �������� ������ � ���������� ����������� ��������
-        // parentStream - ����� ������
-        stream = new ThrottledStream(parentStream, speed);
+        //Some DataStream creating
+        //Stream dataStream = new Stream();
+        //stream = new ThrottledStream(dataStream, speed);
 
     }
 
@@ -39,7 +37,18 @@ public class Signal
         return speed + "\t" + signalType;
     }
 
-    public int Power(float distance, int collision, float radius, int countOfUsers)
+    public void ChangeSignal(float distance, int collision, float radius, int countOfUsers)
+    {
+        ChangePower(distance, collision, radius, countOfUsers);
+        ChangeSpeed();
+    }
+    public void ChangeSignal(int power)
+    {
+        this.power = power;
+        ChangeSpeed();
+    }
+
+    public void ChangePower(float distance, int collision, float radius, int countOfUsers)
     {
         this.distance = distance;
         int AntenaPower = 40000; //�������� ���������� �� ������ ������� �������
@@ -74,31 +83,58 @@ public class Signal
             this.power -= System.Convert.ToInt32(0.2 * countOfUsers);
         }
 
-
-        // ������ ������� �������� �������!!!
-
-        ChangeMaxBPS(speed);
-
-
     }
 
-    public void ChangeMaxBPS(int bps)
+
+    // imaginary formula fro dependency of speed from signal power
+    public void ChangeSpeed()
     {
-        stream.MaxBytesPerSecond = bps;
-    }
+        int mbps = 0;
 
+        if (power >= -55)
+        {
+            mbps = 20000;
+        }
+        else if (power >= -70)
+        {
+            mbps = 10000 + System.Convert.ToInt32((power + 70) / 0.0015);
+        }
+        else if (power >= -85)
+        {
+            mbps = 1000 + System.Convert.ToInt32((power + 85) / 0.002);
+        }
+        else if (power >= -100)
+        { 
+            mbps = 50 + System.Convert.ToInt32((power + 100) / 0.015);
+        }
+
+        if(mbps >= 1000)
+        {
+            speed = mbps / 1000;
+            signalType = SignalType.Gbps;
+        }
+        else
+        {
+            speed = mbps;
+            signalType = SignalType.Mbps;
+        }
+
+
+        //stream.MaxBytesPerSecond = mbps * 125000;
+
+    }
 
     public string GetNetIndexator()
     {
         string netIndexator = "";
 
-        if(power >= -120)
+        if(power >= -100)
         {
             netIndexator += "<color=green>.</color>";
-            if(power >= -100)
+            if(power >= -85)
             {
                 netIndexator += "<color=green>�</color>";
-                if(power >= -70)
+                if(power >= -55)
                 {
                     netIndexator += "<color=green>�</color>";
                 }

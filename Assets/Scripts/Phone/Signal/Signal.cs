@@ -23,7 +23,7 @@ public class Signal
         return speed + "\t" + signalType;
     }
 
-    public void Power(float distance, int collision, float radius, int countOfUsers)
+    public int Power(float distance, int collision, float radius, int countOfUsers)
     {
         this.distance = distance;
         int AntenaPower = 40000; //мощность подаваемая на антену базовой станции
@@ -31,7 +31,7 @@ public class Signal
         float maxHz = 300;
         float coefficient = - (minHz - maxHz) / radius;
         float f = (30 + distance * coefficient) * Mathf.Pow(10, 9); //частота
-        int x = 2;// UnityEngine.Random.Range(0, 2); //изменяющаяся во времени рандомизированная переменная [0..2]
+        int x = 2; // TODO: изменяющаяся во времени рандомизированная переменная (0..2], возможно придется сделать через Random()
         float powerOfTower = AntenaPower * Mathf.Pow((c / (4 * Mathf.PI * distance * f)), 2);//мощность вышки
 
         float A = 1, B = 0;//коэффициенты для потерь, где А=5 и В=0.03 для низкой задержки,
@@ -51,7 +51,6 @@ public class Signal
 
         float signalPower = 15 * Mathf.Log10( powerOfTower * x) + 30 - Bpl;//сила сигнала
 
-        this.power = System.Convert.ToInt32(signalPower);
 
 
         if(countOfUsers > 256)
@@ -59,7 +58,7 @@ public class Signal
             this.power -= System.Convert.ToInt32(0.2 * countOfUsers);
         }
 
-
+        return System.Convert.ToInt32(signalPower);
     }
 
     public string GetNetIndexator()

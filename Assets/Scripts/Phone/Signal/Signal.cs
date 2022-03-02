@@ -133,19 +133,19 @@ public class Signal
             netIndexator += "<color=green>.</color>";
             if(power >= -85)
             {
-                netIndexator += "<color=green>�</color>";
+                netIndexator += "<color=green>п</color>";
                 if(power >= -55)
                 {
-                    netIndexator += "<color=green>�</color>";
+                    netIndexator += "<color=green>П</color>";
                 }
                 else
                 {
-                    netIndexator += "<color=grey>�</color>";
+                    netIndexator += "<color=grey>П</color>";
                 }
             }
             else
             {
-                netIndexator += "<color=grey>��</color>";
+                netIndexator += "<color=grey>пП</color>";
             }
         }
         else

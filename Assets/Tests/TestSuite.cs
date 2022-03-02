@@ -14,7 +14,8 @@ public class TestSuite
         float distance = 6;
         int collision = 0;
         float radius = 500;
-        int received = signal.Power(distance, collision, radius, 1);
+        signal.ChangeSignal(distance, collision, radius, 1);
+        int received = signal.power;
         int expect = -14;
         Assert.AreEqual(expect, received);
     }
@@ -25,7 +26,8 @@ public class TestSuite
         float distance = 482.7255f;
         int collision = 1;
         float radius = 500;
-        int received = signal.Power(distance, collision, radius, 1);
+        signal.ChangeSignal(distance, collision, radius, 1);
+        int received = signal.power;
         int expect = -134;
         Assert.AreEqual(expect, received);
     }
@@ -36,7 +38,8 @@ public class TestSuite
         float distance = 463.7243f;
         int collision = 2;
         float radius = 500;
-        int received = signal.Power(distance, collision, radius, 1);
+        signal.ChangeSignal(distance, collision, radius, 1);
+        int received = signal.power;
         int expect = -154;
         Assert.AreEqual(expect, received);
     }

@@ -46,7 +46,8 @@ public class CellSphere : MonoBehaviour
             Vector3 vectorDistance = obj.transform.position - phoneObject.transform.position;
             float distance = Mathf.Sqrt(vectorDistance.x * vectorDistance.x +
                 vectorDistance.y * vectorDistance.y + vectorDistance.z * vectorDistance.z);
-            phone.connections.Add(obj.name, distance);
+            float power = phone.GetPower(phoneObject, obj);
+            phone.connections.Add(obj.name, power);
             conectedPhones.Add(phone);
         }
     }

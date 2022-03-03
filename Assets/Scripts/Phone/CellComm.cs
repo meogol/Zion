@@ -15,7 +15,7 @@ public class CellComm : MonoBehaviour
     public TextMeshPro text { get; set; }
     public Dictionary<string, float> connections = new Dictionary<string, float>();
 
-    public int collisionsCount { get; set; }
+    public Dictionary<string, int> collisionsCount = new Dictionary<string, int>();
     public GameObject sphereObj;
     public CellSphere sphere;
     public Signal signal { get; set; }
@@ -25,8 +25,6 @@ public class CellComm : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
-        collisionsCount = 0;
         output = "";
         text = GetComponent<TextMeshPro>();
         device = "Zion 0.0";
@@ -57,12 +55,15 @@ public class CellComm : MonoBehaviour
                     maxKey = key;
                 }
             }
-
+            Debug.Log(connections.Keys.ToList()[0].ToString() +"\t"+ connections.Values.ToList()[0].ToString() 
+                    + "\t" +  connections.Keys.ToList()[1].ToString() + "\t" + connections.Values.ToList()[1].ToString());
+            Debug.Log(collisionsCount.Keys.ToList()[0].ToString() + "\t" + collisionsCount.Values.ToList()[0].ToString()
+                    + "\t" + collisionsCount.Keys.ToList()[1].ToString() + "\t" + collisionsCount.Values.ToList()[1].ToString());
             sphereObj = GameObject.Find(maxKey);
         }
         catch (Exception e)
         {
-            Debug.Log(e);
+            Debug.LogError(e);
         }
     }
 
@@ -75,6 +76,8 @@ public class CellComm : MonoBehaviour
             {
                 tower = GameObject.Find(key);
                 connections[key] = GetPower(obj, tower);
+
+                collisionsCount[key] = Shoot(transform.position, tower);
             }
 
         }
@@ -92,7 +95,8 @@ public class CellComm : MonoBehaviour
                                     vectorDistance.y * vectorDistance.y +
                                     vectorDistance.z * vectorDistance.z);
         float radius = tower.transform.localScale.x / 2;
-        newSignal.ChangeSignal(distance, collisionsCount, radius, tower.GetComponent<CellSphere>().conectedPhones.Count);
+        newSignal.ChangeSignal(distance, collisionsCount[tower.name], radius, 
+                                tower.GetComponent<CellSphere>().conectedPhones.Count);
       
         return newSignal.power;
     }
@@ -113,15 +117,13 @@ public class CellComm : MonoBehaviour
 
             signal.ChangeSignal(System.Convert.ToInt32(connections[sphereObj.name]));
 
-            collisionsCount = 0;
-            Shoot(transform.position);
 
 
             try
             {
                 text.text = $"{signal.GetNetIndexator()}\n{signal.speed} {signal.signalType}\n_____________\n" +
                     $"{device}\n\nConnected to {sphereObj.name}\n\n" +
-                     $"Signal:\n {signal.power} dBm\n\nCollisions:\n{collisionsCount}";
+                     $"Signal:\n {signal.power} dBm\n\nCollisions:\n{collisionsCount[sphereObj.name]}";
                 
             }
             catch (Exception e)
@@ -141,10 +143,10 @@ public class CellComm : MonoBehaviour
         }
     }
 
-    private void Shoot(Vector3 position)
+    public int Shoot(Vector3 position, GameObject tower)
     {
-
-        Vector3 vectorDistance = sphereObj.transform.position - position;
+        int collisions = 0;
+        Vector3 vectorDistance = tower.transform.position - position;
 
         RaycastHit _hit;
 
@@ -152,16 +154,17 @@ public class CellComm : MonoBehaviour
         {
             if (_hit.collider.tag == "Building")
             {
-                collisionsCount++;
-                vectorDistance = sphereObj.transform.position - _hit.point;
+                collisions++;
+                vectorDistance = tower.transform.position - _hit.point;
 
                 position = _hit.point + (vectorDistance
                             / (Math.Max(vectorDistance.x, Math.Max(vectorDistance.y, vectorDistance.z))));
-                Shoot(position);
+                collisions += Shoot(position, tower);
             }
         }
-        
-        
+
+
+        return collisions;
     }
 
 

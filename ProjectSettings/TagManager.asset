@@ -15,6 +15,7 @@ TagManager:
   - PhonePlacer
   - PhoneText
   - PlayerPhone
+  - PickUpPhoneText
   layers:
   - Default
   - TransparentFX

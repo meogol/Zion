@@ -12,6 +12,9 @@ TagManager:
   - Undefined
   - Sphere_1
   - Building
+  - PhonePlacer
+  - PhoneText
+  - PlayerPhone
   layers:
   - Default
   - TransparentFX
@@ -20,8 +23,8 @@ TagManager:
   - Water
   - UI
   - Tower
-  - 
-  - 
+  - Phone
+  - Camera
   - 
   - 
   - 

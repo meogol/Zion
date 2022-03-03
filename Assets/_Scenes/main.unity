@@ -532,6 +532,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Celltower_1
       objectReference: {fileID: 0}
+    - target: {fileID: 540256194054401070, guid: ebb2664204d2c53469765d3969afb976, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2180264, guid: 2e498d1c8094910479dc3e1b768306a4, type: 2}
     - target: {fileID: 783025134133970992, guid: ebb2664204d2c53469765d3969afb976, type: 3}
       propertyPath: m_TagString
       value: Untagged
@@ -604,6 +608,14 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Sphere
       objectReference: {fileID: 0}
+    - target: {fileID: 8849499903723100068, guid: ebb2664204d2c53469765d3969afb976, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 2e498d1c8094910479dc3e1b768306a4, type: 2}
+    - target: {fileID: 8849499903723100068, guid: ebb2664204d2c53469765d3969afb976, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 2180264, guid: 2e498d1c8094910479dc3e1b768306a4, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ebb2664204d2c53469765d3969afb976, type: 3}
 --- !u!4 &2117684369 stripped

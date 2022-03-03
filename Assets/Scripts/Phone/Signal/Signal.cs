@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Signal
 {
+    private int speedMBPS { get; set; }
     public int speed { get; set; }
     public int power { get; set; }
     public int collisionsCount { get; set; }
@@ -39,16 +40,27 @@ public class Signal
 
     public void ChangeSignal(float distance, int collision, float radius, int countOfUsers)
     {
-        ChangePower(distance, collision, radius, countOfUsers);
-        ChangeSpeed();
+        power = ChangePower(distance, collision, radius, countOfUsers);
+        Signal changedSignal = ChangeSpeed(power);
+        speedMBPS = changedSignal.speedMBPS;
+        speed = changedSignal.speed;
+        signalType = changedSignal.signalType;
+
+        //stream.MaxBytesPerSecond = speedMBPS * 125000;
+
     }
     public void ChangeSignal(int power)
     {
         this.power = power;
-        ChangeSpeed();
+        Signal changedSignal = ChangeSpeed(power);
+        speedMBPS = changedSignal.speedMBPS;
+        speed = changedSignal.speed;
+        signalType = changedSignal.signalType;
+
+        //stream.MaxBytesPerSecond = speedMBPS * 125000;
     }
 
-    public void ChangePower(float distance, int collision, float radius, int countOfUsers)
+    public int ChangePower(float distance, int collision, float radius, int countOfUsers)
     {
         this.distance = distance;
         int AntenaPower = 40000; //�������� ���������� �� ������ ������� �������
@@ -80,48 +92,49 @@ public class Signal
 
         if(countOfUsers > 256)
         {
-            this.power -= System.Convert.ToInt32(0.2 * countOfUsers);
+            signalPower -= System.Convert.ToInt32(0.2 * countOfUsers);
         }
+
+        return System.Convert.ToInt32(signalPower);
 
     }
 
 
     // imaginary formula fro dependency of speed from signal power
-    public void ChangeSpeed()
+    public Signal ChangeSpeed(int signalPower)
     {
-        int mbps = 0;
+        Signal signal = new Signal();
 
-        if (power >= -55)
+        if (signalPower >= -55)
         {
-            mbps = 20000;
+            signal.speedMBPS = 20000;
         }
-        else if (power >= -70)
+        else if (signalPower >= -70)
         {
-            mbps = 10000 + System.Convert.ToInt32((power + 70) / 0.0015);
+            signal.speedMBPS = 10000 + System.Convert.ToInt32((signalPower + 70) / 0.0015);
         }
-        else if (power >= -85)
+        else if (signalPower >= -85)
         {
-            mbps = 1000 + System.Convert.ToInt32((power + 85) / 0.002);
+            signal.speedMBPS = 1000 + System.Convert.ToInt32((signalPower + 85) / 0.002);
         }
-        else if (power >= -100)
-        { 
-            mbps = 50 + System.Convert.ToInt32((power + 100) / 0.015);
+        else if (signalPower >= -100)
+        {
+            signal.speedMBPS = 50 + System.Convert.ToInt32((signalPower + 100) / 0.015);
         }
 
-        if(mbps >= 1000)
+
+        if (signal.speedMBPS >= 1000)
         {
-            speed = mbps / 1000;
-            signalType = SignalType.Gbps;
+            signal.speed = signal.speedMBPS / 1000;
+            signal.signalType = SignalType.Gbps;
         }
         else
         {
-            speed = mbps;
-            signalType = SignalType.Mbps;
+            signal.speed = signal.speedMBPS;
+            signal.signalType = SignalType.Mbps;
         }
 
-
-        //stream.MaxBytesPerSecond = mbps * 125000;
-
+        return signal;
     }
 
     public string GetNetIndexator()

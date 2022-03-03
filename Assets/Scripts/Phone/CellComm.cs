@@ -55,10 +55,6 @@ public class CellComm : MonoBehaviour
                     maxKey = key;
                 }
             }
-            Debug.Log(connections.Keys.ToList()[0].ToString() +"\t"+ connections.Values.ToList()[0].ToString() 
-                    + "\t" +  connections.Keys.ToList()[1].ToString() + "\t" + connections.Values.ToList()[1].ToString());
-            Debug.Log(collisionsCount.Keys.ToList()[0].ToString() + "\t" + collisionsCount.Values.ToList()[0].ToString()
-                    + "\t" + collisionsCount.Keys.ToList()[1].ToString() + "\t" + collisionsCount.Values.ToList()[1].ToString());
             sphereObj = GameObject.Find(maxKey);
         }
         catch (Exception e)

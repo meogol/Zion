@@ -7,7 +7,6 @@ public class Signal
     private int speedMBPS { get; set; }
     public int speed { get; set; }
     public int power { get; set; }
-    public int collisionsCount { get; set; }
     public SignalType signalType { get; set; }
 
     private int c = 299792458; //�������� ����� � �/�

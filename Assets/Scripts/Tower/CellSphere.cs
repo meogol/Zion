@@ -25,14 +25,14 @@ public class CellSphere : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if(other.tag == "Phone")
+        if(other.tag == "PhoneText")
         {
             addConnection(other.gameObject);
         }
     }
     private void OnTriggerExit(Collider other)
     {
-        if (other.tag == "Phone")
+        if (other.tag == "PhoneText")
         {
             removeConnection(other.gameObject);
         }

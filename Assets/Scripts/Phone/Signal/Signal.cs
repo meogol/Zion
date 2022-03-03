@@ -40,11 +40,11 @@ public class Signal
 
     public void ChangeSignal(float distance, int collision, float radius, int countOfUsers)
     {
-        power = ChangePower(distance, collision, radius, countOfUsers);
+        this.power = ChangePower(distance, collision, radius, countOfUsers);
         Signal changedSignal = ChangeSpeed(power);
-        speedMBPS = changedSignal.speedMBPS;
-        speed = changedSignal.speed;
-        signalType = changedSignal.signalType;
+        this.speedMBPS = changedSignal.speedMBPS;
+        this.speed = changedSignal.speed;
+        this.signalType = changedSignal.signalType;
 
         //stream.MaxBytesPerSecond = speedMBPS * 125000;
 
@@ -53,9 +53,9 @@ public class Signal
     {
         this.power = power;
         Signal changedSignal = ChangeSpeed(power);
-        speedMBPS = changedSignal.speedMBPS;
-        speed = changedSignal.speed;
-        signalType = changedSignal.signalType;
+        this.speedMBPS = changedSignal.speedMBPS;
+        this.speed = changedSignal.speed;
+        this.signalType = changedSignal.signalType;
 
         //stream.MaxBytesPerSecond = speedMBPS * 125000;
     }

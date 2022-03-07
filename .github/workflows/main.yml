@@ -23,4 +23,5 @@ jobs:
       - name: Unity - Builder
         uses: game-ci/unity-builder@v2.0.0-alpha-14
         with:
+          targetPlatform: StandaloneWindows
           unityVersion: 2020.3.27f1

@@ -16,5 +16,6 @@ jobs:
     name: Unit Testing
     runs-on: windows-latest
     steps:
-      - uses: actions/checkout@v2.1.0
-      - run: dotnet test
+      - uses: game-ci/unity-test-runner@v2.0.0-alpha-7
+        with:
+          unityVersion: 2020.3.27f1

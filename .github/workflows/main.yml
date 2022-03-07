@@ -2,6 +2,9 @@
 
 name: Test_CS
 
+env:
+  UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+
 # Controls when the workflow will run
 on:
   pull_request:
@@ -12,20 +15,32 @@ on:
   workflow_dispatch:
 
 jobs:
-  tests:
-    name: Unit Testing
-    runs-on: windows-2019
+  testAllModes:
+    name: Test in ${{ matrix.testMode }} on version ${{ matrix.unityVersion }}
+    runs-on: ubuntu-latest 
+    strategy:
+      fail-fast: false
+      matrix:
+        projectPath:
+          - ./
+        unityVersion:
+          - 2020.3.27f1
+        testMode:
+          - playmode
+          - editmode
     steps:
-      - name: Unity - Test runner
-        uses: game-ci/unity-test-runner@v2.0.0-alpha-7
-        env:
-          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+      - name: Checkout
+        uses: actions/checkout@v2
         with:
-          unityVersion: 2020.3.27f1
-      - name: Unity - Builder
-        uses: game-ci/unity-builder@v2.0.0-alpha-14
-        env:
-          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+          lfs: false # will be true eventually
+          
+      - name: Tests
+        uses: game-ci/unity-test-runner@v2
         with:
-          targetPlatform: StandaloneWindows
-          unityVersion: 2020.3.27f1
+          projectPath: ${{ matrix.projectPath }}
+          githubToken: ${{ secrets.GITHUB_TOKEN }}
+          artifactsPath: ${{ matrix.testMode }}-artifacts
+          unityVersion: ${{ matrix.unityVersion }}
+          testMode: ${{ matrix.testMode }}
+          checkName: ${{ matrix.testMode }} Test Results
+          customParameters: '-nographics'

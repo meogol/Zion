@@ -14,7 +14,7 @@ on:
 jobs:
   tests:
     name: Unit Testing
-    runs-on: ubuntu-latest
+    runs-on: windows-2019
     steps:
       - name: Unity - Test runner
         uses: game-ci/unity-test-runner@v2.0.0-alpha-7

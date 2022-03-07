@@ -14,7 +14,13 @@ on:
 jobs:
   tests:
     name: Unit Testing
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     steps:
-      - uses: actions/checkout@v2.1.0
-      - run: dotnet test
+      - name: Unity - Test runner
+        uses: game-ci/unity-test-runner@v2.0.0-alpha-7
+        with:
+          unityVersion: 2020.3.27f1
+      - name: Unity - Builder
+        uses: game-ci/unity-builder@v2.0.0-alpha-14
+        with:
+          unityVersion: 2020.3.27f1

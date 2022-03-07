@@ -5,6 +5,7 @@ using TMPro;
 using System;
 using System.Linq;
 
+
 public class CellComm : MonoBehaviour
 {
     public const String DEFAULT_TEXT = "<color=red>no signal...</color>\n0 Mbps\n_____________\nZion 0.0\n\nNo connection...";
@@ -21,6 +22,10 @@ public class CellComm : MonoBehaviour
     public Signal signal { get; set; }
     [SerializeField]
     private LayerMask mask;
+
+    private PingRequests pingCaller = new PingRequests();
+
+    public string bufferPing;
 
     // Start is called before the first frame update
     void Start()
@@ -117,9 +122,12 @@ public class CellComm : MonoBehaviour
 
             try
             {
+                bufferPing = pingCaller.CallPing();
+                Debug.Log(bufferPing);
                 text.text = $"{signal.GetNetIndexator()}\n{signal.speed} {signal.signalType}\n_____________\n" +
                     $"{device}\n\nConnected to {sphereObj.name}\n\n" +
-                     $"Signal:\n {signal.power} dBm\n\nCollisions:\n{collisionsCount[sphereObj.name]}";
+                     $"Signal:\n {signal.power} dBm\n\nCollisions:\n{collisionsCount[sphereObj.name]}" + 
+                     $"\nPing:\n {bufferPing}";
                 
             }
             catch (Exception e)

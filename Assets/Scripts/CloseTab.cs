@@ -24,5 +24,8 @@ public class CloseTab : MonoBehaviour
     {
         Thecamera.enabled = !Thecamera.enabled;
         Cam.enabled = !Cam.enabled;
+
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
 }

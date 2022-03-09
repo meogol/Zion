@@ -10,6 +10,10 @@ public class CameraDirection : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (Camera.main != null)
+        {
+
+        
         Ray ray = Camera.main.ScreenPointToRay(new Vector3(Input.mousePosition.x, Input.mousePosition.y, Input.mousePosition.z));
         RaycastHit hit;
 
@@ -20,6 +24,8 @@ public class CameraDirection : MonoBehaviour
         else
         {
             textholder.SetActive(false);
+        }
+
         }
     }
 }

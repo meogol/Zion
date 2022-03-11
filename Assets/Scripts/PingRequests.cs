@@ -10,8 +10,7 @@ public class PingRequests : MonoBehaviour
     public string noConnection = "No connection !!!";
 
     public string ping;
-    public int TimeMl;//TODO:package processing time
-
+    public int InputCount { get; set; }
     private Ping pingSender = new Ping();
     private PingOptions pingOptions = new PingOptions();
     private static string data = "Testing request. Hello, fellow comrads!";
@@ -23,6 +22,7 @@ public class PingRequests : MonoBehaviour
     public void CallPing()
     {   
         pingOptions.DontFragment = true;
+        InputCount = 0;
 
         while (true)
         {
@@ -39,10 +39,20 @@ public class PingRequests : MonoBehaviour
 
                 ping = noConnection;
             }
+
             stopwatch.Stop();
+
             int TimeMl = System.Convert.ToInt32(stopwatch.ElapsedMilliseconds);
-            UnityEngine.Debug.Log("вывод твоего дерьма" + i);
-            stopwatch.Reset();
+            UnityEngine.Debug.Log("твой вывод " + TimeMl);
+            InputCount++;
+            
+            if (stopwatch.ElapsedMilliseconds >= 1000)
+            {
+                UnityEngine.Debug.Log("твой вывод2 " + InputCount);
+                InputCount = 0;
+                stopwatch.Reset();
+            }
+            
         }
     }
 }

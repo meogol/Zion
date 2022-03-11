@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Net.NetworkInformation;
 using System.Text;
 using Ping = System.Net.NetworkInformation.Ping;
+using System.Diagnostics;
 
 
 public class PingRequests : MonoBehaviour
@@ -9,6 +10,7 @@ public class PingRequests : MonoBehaviour
     public string noConnection = "No connection !!!";
 
     public string ping;
+    public int TimeMl;//TODO:package processing time
 
     private Ping pingSender = new Ping();
     private PingOptions pingOptions = new PingOptions();
@@ -16,6 +18,7 @@ public class PingRequests : MonoBehaviour
     byte[] buffer = Encoding.ASCII.GetBytes(data);
     static int timeout = 120;
     private PingReply reply;
+    Stopwatch stopwatch = new Stopwatch();
 
     public void CallPing()
     {   
@@ -23,10 +26,11 @@ public class PingRequests : MonoBehaviour
 
         while (true)
         {
+            stopwatch.Start();
             reply = pingSender.Send("yandex.ru", timeout, buffer, pingOptions);
             if (reply.Status == IPStatus.Success)
             {
-                Debug.Log(reply.Address);
+                UnityEngine.Debug.Log(reply.Address);
 
                 ping = reply.RoundtripTime.ToString();
             }
@@ -35,6 +39,10 @@ public class PingRequests : MonoBehaviour
 
                 ping = noConnection;
             }
+            stopwatch.Stop();
+            int TimeMl = System.Convert.ToInt32(stopwatch.ElapsedMilliseconds);
+            UnityEngine.Debug.Log("вывод твоего дерьма" + i);
+            stopwatch.Reset();
         }
     }
 }

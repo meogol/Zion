@@ -27,6 +27,8 @@ public class CellComm : MonoBehaviour
 
     public string bufferPing;
 
+    private Thread pingThread;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -36,7 +38,7 @@ public class CellComm : MonoBehaviour
         signal = new Signal();
         text.text = DEFAULT_TEXT;
 
-        Thread pingThread = new Thread(pingCaller.CallPing);
+        pingThread = new Thread(pingCaller.CallPing);
         pingThread.Start();
     }
 

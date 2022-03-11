@@ -4,7 +4,7 @@ using UnityEngine;
 using TMPro;
 using System;
 using System.Linq;
-
+using System.Threading;
 
 public class CellComm : MonoBehaviour
 {
@@ -27,6 +27,8 @@ public class CellComm : MonoBehaviour
 
     public string bufferPing;
 
+    private Thread pingThread;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -35,6 +37,9 @@ public class CellComm : MonoBehaviour
         device = "Zion 0.0";
         signal = new Signal();
         text.text = DEFAULT_TEXT;
+
+        pingThread = new Thread(pingCaller.CallPing);
+        pingThread.Start();
     }
 
     // Update is called once per frame
@@ -122,7 +127,7 @@ public class CellComm : MonoBehaviour
 
             try
             {
-                bufferPing = pingCaller.CallPing();
+                bufferPing = pingCaller.ping;
                 Debug.Log(bufferPing);
                 text.text = $"{signal.GetNetIndexator()}\n{signal.speed} {signal.signalType}\n_____________\n" +
                     $"{device}\n\nConnected to {sphereObj.name}\n\n" +

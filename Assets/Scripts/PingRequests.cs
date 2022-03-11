@@ -1,43 +1,40 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using System.Net;
 using System.Net.NetworkInformation;
 using System.Text;
 using Ping = System.Net.NetworkInformation.Ping;
-using System;
+
 
 public class PingRequests : MonoBehaviour
 {
     public string noConnection = "No connection !!!";
-    public string CallPing()
+
+    public string ping;
+
+    private Ping pingSender = new Ping();
+    private PingOptions pingOptions = new PingOptions();
+    private static string data = "Testing request. Hello, fellow comrads!";
+    byte[] buffer = Encoding.ASCII.GetBytes(data);
+    static int timeout = 120;
+    private PingReply reply;
+
+    public void CallPing()
     {   
-
-        Ping pingSender = new Ping();
-        PingOptions pingOptions = new PingOptions();
-
-
         pingOptions.DontFragment = true;
 
-
-        string data = "Testing request. Hello, fellow comrads!";
-        byte[] buffer = Encoding.ASCII.GetBytes(data);
-        int timeout = 120;
-
-        PingReply reply = pingSender.Send("www.google.com", timeout, buffer, pingOptions);
-        if (reply.Status == IPStatus.Success)
+        while (true)
         {
-            /// Debug.Log(reply.Address);
-            ///Debug.Log(reply.Options.Ttl);
-            ///Debug.Log(reply.Options.DontFragment);
-            ///Debug.Log(reply.Buffer);
-            return reply.RoundtripTime.ToString();
-        }
-        else
-        {
-            
-            return noConnection;
-        }
+            reply = pingSender.Send("yandex.ru", timeout, buffer, pingOptions);
+            if (reply.Status == IPStatus.Success)
+            {
+                Debug.Log(reply.Address);
 
+                ping = reply.RoundtripTime.ToString();
+            }
+            else
+            {
+
+                ping = noConnection;
+            }
+        }
     }
 }

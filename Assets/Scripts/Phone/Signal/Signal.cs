@@ -98,6 +98,14 @@ public class Signal
 
     }
 
+    public int PocketLoss()
+    {
+        int Nb = 2;//TODO:buffer size in MB
+        float step = (float)(2 / ((System.Math.Pow(1, 2) + System.Math.Pow(1, 2))) * Nb);//TODO:power - law construction
+        float p = 1;//TODO:loading the system
+        float PL = ((float)((1 - p) / (1 - System.Math.Pow(p, step + 1)) * System.Math.Pow(p, step)));//TODO: Pocket Loss
+        return System.Convert.ToInt32(PL);
+    }
 
     // imaginary formula fro dependency of speed from signal power
     public Signal ChangeSpeed(int signalPower)

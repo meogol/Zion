@@ -6,7 +6,9 @@ public class Signal
 {
     private int speedMBPS { get; set; }
     public int speed { get; set; }
+    public int InputCount { get; set; }
     public int power { get; set; }
+    public int TimeMl { get; set; }//TODO:package processing time
     public SignalType signalType { get; set; }
 
     private int c = 299792458; //�������� ����� � �/�
@@ -100,11 +102,22 @@ public class Signal
 
     public int PocketLoss()
     {
+        
         int Nb = 2;//TODO:buffer size in MB
         float step = (float)(2 / ((System.Math.Pow(1, 2) + System.Math.Pow(1, 2))) * Nb);//TODO:power - law construction
         float p = 1;//TODO:loading the system
         float PL = ((float)((1 - p) / (1 - System.Math.Pow(p, step + 1)) * System.Math.Pow(p, step)));//TODO: Pocket Loss
         return System.Convert.ToInt32(PL);
+    }
+
+    private float SKOTime()
+    {
+        return 0;
+    }
+
+    private float SKOSpeed()
+    {
+        return 0;
     }
 
     // imaginary formula fro dependency of speed from signal power

@@ -42,6 +42,11 @@ public class CellComm : MonoBehaviour
         pingThread.Start();
     }
 
+    private void OnApplicationQuit()
+    {
+        pingThread.Abort();
+    }
+
     // Update is called once per frame
     void FixedUpdate()
     {

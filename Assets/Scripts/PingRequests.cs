@@ -41,14 +41,10 @@ public class PingRequests : MonoBehaviour
             }
 
             stopwatch.Stop();
-
-            int TimeMl = System.Convert.ToInt32(stopwatch.ElapsedMilliseconds);
-            UnityEngine.Debug.Log("твой вывод " + TimeMl);
             InputCount++;
             
             if (stopwatch.ElapsedMilliseconds >= 1000)
             {
-                UnityEngine.Debug.Log("твой вывод2 " + InputCount);
                 InputCount = 0;
                 stopwatch.Reset();
             }

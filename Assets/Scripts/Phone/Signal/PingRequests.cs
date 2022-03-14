@@ -10,7 +10,7 @@ public class PingRequests : MonoBehaviour
     public string noConnection = "No connection !!!";
 
     public string ping;
-    public int InputCount { get; set; }
+    public int inputCount;
     private Ping pingSender = new Ping();
     private PingOptions pingOptions = new PingOptions();
     private static string data = "Testing request. Hello, fellow comrads!";
@@ -22,7 +22,7 @@ public class PingRequests : MonoBehaviour
     public void CallPing()
     {   
         pingOptions.DontFragment = true;
-        InputCount = 0;
+        int InputCount = 0;
 
         while (true)
         {
@@ -30,7 +30,7 @@ public class PingRequests : MonoBehaviour
             reply = pingSender.Send("yandex.ru", timeout, buffer, pingOptions);
             if (reply.Status == IPStatus.Success)
             {
-                UnityEngine.Debug.Log(reply.Address);
+                //UnityEngine.Debug.Log(reply.Address);
 
                 ping = reply.RoundtripTime.ToString();
             }
@@ -45,8 +45,11 @@ public class PingRequests : MonoBehaviour
             
             if (stopwatch.ElapsedMilliseconds >= 1000)
             {
+                inputCount = InputCount;
                 InputCount = 0;
                 stopwatch.Reset();
+                UnityEngine.Debug.Log("локальная " + InputCount);
+                UnityEngine.Debug.Log("глобальная  " + inputCount);
             }
             
         }

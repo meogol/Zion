@@ -16,6 +16,9 @@ TagManager:
   - PhoneText
   - PlayerPhone
   - PickUpPhoneText
+  - Office
+  - Corridor
+  - Industrial
   layers:
   - Default
   - TransparentFX

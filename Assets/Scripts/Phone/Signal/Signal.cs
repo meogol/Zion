@@ -1,6 +1,7 @@
 using System.IO;
 using UnityEngine;
-
+using System.Collections.Generic;
+using System.Threading;
 
 public class Signal
 {
@@ -8,10 +9,12 @@ public class Signal
     public int speed { get; set; }
     public int InputCount { get; set; }
     public int power { get; set; }
+    public int pocketLoss { get; set; }
     public int TimeMl { get; set; }//TODO:package processing time
     public SignalType signalType { get; set; }
 
-    private int c = 299792458; //�������� ����� � �/�
+    private int c = 299792458;
+    private List<int> CountTime = new List<int>(10);
     private float distance { get; set; }
 
 
@@ -46,6 +49,7 @@ public class Signal
         this.speedMBPS = changedSignal.speedMBPS;
         this.speed = changedSignal.speed;
         this.signalType = changedSignal.signalType;
+        this.pocketLoss = PocketLoss();
 
         //stream.MaxBytesPerSecond = speedMBPS * 125000;
 
@@ -57,6 +61,7 @@ public class Signal
         this.speedMBPS = changedSignal.speedMBPS;
         this.speed = changedSignal.speed;
         this.signalType = changedSignal.signalType;
+        this.pocketLoss = PocketLoss();
 
         //stream.MaxBytesPerSecond = speedMBPS * 125000;
     }
@@ -97,27 +102,33 @@ public class Signal
         }
 
         return System.Convert.ToInt32(signalPower);
-
     }
 
     public int PocketLoss()
     {
-        
         int Nb = 2;//TODO:buffer size in MB
-        float step = (float)(2 / ((System.Math.Pow(1, 2) + System.Math.Pow(1, 2))) * Nb);//TODO:power - law construction
+        float step = (float)(2 / (System.Math.Pow(SKOTime(), 2) + System.Math.Pow(1, 2)) * Nb);//TODO:power - law construction
         float p = 1;//TODO:loading the system
         float PL = ((float)((1 - p) / (1 - System.Math.Pow(p, step + 1)) * System.Math.Pow(p, step)));//TODO: Pocket Loss
-        return System.Convert.ToInt32(PL);
+        return 12;//System.Convert.ToInt32(PL);
     }
 
     private float SKOTime()
     {
-        return 0;
+        //Thread.Sleep(1000);
+        CountTime.Add(TimeMl);
+        int sum=0;
+        for (int i=0; CountTime.Count >= i; i++) { sum += CountTime[i]; }
+        float AverValue = sum / CountTime.Count;
+        double SumDev = 0;
+        for (int i=0; CountTime.Count >=i; i++) { SumDev += System.Math.Pow((CountTime[i] - AverValue), 2); }
+        float SKO= (float)System.Math.Sqrt(SumDev/(CountTime.Count-1));
+        return SKO;
     }
 
     private float SKOSpeed()
     {
-        return 0;
+        return 1;
     }
 
     // imaginary formula fro dependency of speed from signal power

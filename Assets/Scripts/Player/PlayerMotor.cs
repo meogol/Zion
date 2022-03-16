@@ -62,7 +62,7 @@ public class PlayerMotor : MonoBehaviour
     void PerformRotation()
     {
         euler.x -= Input.GetAxis("Mouse Y") * Speed;
-        euler.x =  Mathf.Clamp(euler.x, -80.0f, 70.0f);
+        euler.x =  Mathf.Clamp(euler.x, -80.0f, 30.0f);
         cam.transform.localEulerAngles = euler;
 
 
@@ -73,11 +73,5 @@ public class PlayerMotor : MonoBehaviour
 
         eulerBody.y += Input.GetAxis("Mouse X") * Speed;
         playerBody.transform.localEulerAngles = eulerBody;
-
-        /*rb.MoveRotation(rb.rotation * Quaternion.Euler(rotation));
-        if (cam != null)
-        {
-            cam.transform.Rotate(-rotationCamera);
-        }*/
     }
 }

@@ -59,17 +59,25 @@ public class Signal
         //stream.MaxBytesPerSecond = speedMBPS * 125000;
     }
 
+    public float FrequencyCalculation(float distance, float radius)
+    {
+        float minGHz = 30;
+        float maxGHz = 300;
+
+        float coefficient = -(minGHz - maxGHz) / radius;
+        float frequency = (30 + distance * coefficient) * Mathf.Pow(10, 9);
+
+        return frequency;
+    }
+
     public int ChangePower(float distance, int collision, float radius, int countOfUsers)
     {
         this.distance = distance;
         int AntenaPower = 40000; //�������� ���������� �� ������ ������� �������
-        float minHz = 30;
-        float maxHz = 300;
-        float coefficient = - (minHz - maxHz) / radius;
-        float f = (30 + distance * coefficient) * Mathf.Pow(10, 9); //�������
         int x = 2; // TODO: ������������ �� ������� ����������������� ���������� (0..2], �������� �������� ������� ����� Random()
+        
+        float f = FrequencyCalculation(distance, radius); //�������
         float powerOfTower = AntenaPower * Mathf.Pow((c / (4 * Mathf.PI * distance * f)), 2);//�������� �����
-
         float A = 1, B = 0;//������������ ��� ������, ��� �=5 � �=0.03 ��� ������ ��������,
                            //� �=10 � �=5 ��� �������
 

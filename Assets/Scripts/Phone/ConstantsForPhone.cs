@@ -15,5 +15,11 @@ public static class Ratios
     public const float IndustrialAlfa = 3.79f;
     public const float IndustrialBeta = 21.01f;
     public const float IndustrialGamma = 1.34f;
+}
 
+public enum TypeOfBuilding
+{
+    Office = 0,
+    Corridor,
+    Industrial
 }

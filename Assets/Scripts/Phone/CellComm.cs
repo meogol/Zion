@@ -29,6 +29,10 @@ public class CellComm : MonoBehaviour
 
     private Thread pingThread;
 
+    public RaycastHit[] lastHits = new RaycastHit[3];  // 0 - Office, 1 - Corridor, 2 - Industrial
+
+    public float signalLoss;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -88,9 +92,9 @@ public class CellComm : MonoBehaviour
                 tower = GameObject.Find(key);
                 connections[key] = GetPower(obj, tower);
 
-                int[] col = Shoot(transform.position, tower);
+                /*int[] col = ShootStart(transform.position, tower);
                 int sumOfColl = col[0] + col[1] + col[2];
-                collisionsCount[key] = sumOfColl;
+                collisionsCount[key] = sumOfColl;*/
             }
 
         }
@@ -166,7 +170,16 @@ public class CellComm : MonoBehaviour
         }
     }
 
-    public int[] Shoot(Vector3 position, GameObject tower)
+    public float ShootStart(Vector3 position, GameObject tower)
+    {
+        signalLoss = 0;
+
+        ShootRecursion(position, tower);
+
+        return signalLoss;
+    }
+
+    public int[] ShootRecursion(Vector3 position, GameObject tower)
     {
         int[] collisions = {0, 0, 0};
         Vector3 vectorDistance = tower.transform.position - position;
@@ -188,27 +201,38 @@ public class CellComm : MonoBehaviour
             {
                 case "Office":
                     collisions[(int)TypeOfBuilding.Office]++;
-                    if (collisions[(int)TypeOfBuilding.Office]%2 == 0)
+                    if (collisions[(int)TypeOfBuilding.Office]%2 == 1)
+                    {
+                        lastHits[(int)TypeOfBuilding.Office] = _hit;
+                    }
+                    else
                     {
                         float d = Distance—alculation(obj, tower);
                         float r = tower.transform.localScale.x / 2;
-                        float f = signal.FrequencyCalculation(d, r); 
-                        float signalLoss = (float)(10 * Ratios.OfficeAlfa * Math.Log10(_hit.distance) +
+                        float f = signal.FrequencyCalculation(d, r);
+
+                        signalLoss += (float)(10 * Ratios.OfficeAlfa * Math.Log10(_hit.distance) +
                                             Ratios.OfficeBeta +
                                             10 * Ratios.OfficeGamma * Math.Log10(f));
+
+                        
                     }
 
                     break;
 
                 case "Corridor":
                     collisions[(int)TypeOfBuilding.Corridor]++;
-                    if (collisions[(int)TypeOfBuilding.Corridor] % 2 == 0)
+                    if (collisions[(int)TypeOfBuilding.Corridor] % 2 == 1)
+                    {
+                        lastHits[(int)TypeOfBuilding.Corridor] = _hit;
+                    }
+                    else
                     {
                         float d = Distance—alculation(obj, tower);
                         float r = tower.transform.localScale.x / 2;
                         float f = signal.FrequencyCalculation(d, r);
 
-                        float signalLoss = (float)(10 * Ratios.CorridorAlfa * Math.Log10(_hit.distance) +
+                        signalLoss += (float)(10 * Ratios.CorridorAlfa * Math.Log10(_hit.distance) +
                                             Ratios.CorridorBeta +
                                             10 * Ratios.CorridorGamma * Math.Log10(f));
                     }
@@ -217,13 +241,17 @@ public class CellComm : MonoBehaviour
 
                 case "Industrial":
                     collisions[(int)TypeOfBuilding.Industrial]++;
-                    if (collisions[(int)TypeOfBuilding.Industrial] % 2 == 0)
+                    if (collisions[(int)TypeOfBuilding.Industrial] % 2 == 1)
+                    {
+                        lastHits[(int)TypeOfBuilding.Industrial] = _hit;
+                    }
+                    else
                     {
                         float d = Distance—alculation(obj, tower);
                         float r = tower.transform.localScale.x / 2;
                         float f = signal.FrequencyCalculation(d, r);
 
-                        float signalLoss = (float)(10 * Ratios.IndustrialAlfa * Math.Log10(_hit.distance) +
+                        signalLoss += (float)(10 * Ratios.IndustrialAlfa * Math.Log10(_hit.distance) +
                                             Ratios.IndustrialBeta +
                                             10 * Ratios.IndustrialGamma * Math.Log10(f));
                     }

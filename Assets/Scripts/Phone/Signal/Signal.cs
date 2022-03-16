@@ -11,11 +11,19 @@ public class Signal
     public SignalType signalType { get; set; }
 
     private int c = 299792458;
-    private Stack<int> CountTime = new Stack<int>(10);
+    private int[] CountTime = new int[10] {1, 1, 1, 1, 1, 1, 1, 1, 1, 1};
+    private int[] CountServ = new int[10] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
     private float distance { get; set; }
-    public PingRequests PR { get; set; }
-
-
+    private int sum;
+    private double SumDev;
+    private float AverValue;
+    public float SKO;
+    private int DontTouchTime = 0;
+    private int DontTouchTimeServ = 0;
+    float p = 1/256;//TODO:loading the system n/256, n - count users
+    int Nb = 2;//TODO:buffer size in MB
+    float step;//TODO:power - law construction
+    float PL;//TODO: Pocket Loss
 
     public ThrottledStream stream { get; set; }
 
@@ -102,33 +110,43 @@ public class Signal
         return System.Convert.ToInt32(signalPower);
     }
 
-    public int PocketLoss()
+    public int PocketLoss(int inputCount)
     {
-        int Nb = 2;//TODO:buffer size in MB
-        float step = (float)(2 / (System.Math.Pow(SKOTime(), 2) + System.Math.Pow(1, 2)) * Nb);//TODO:power - law construction
-        float p = 0.5f;//TODO:loading the system
-        float PL = ((float)((1 - p) / (1 - System.Math.Pow(p, step + 1)) * System.Math.Pow(p, step)));//TODO: Pocket Loss
+        step = (float)(2 / (System.Math.Pow(SKOTime(inputCount), 2) + System.Math.Pow(SKOServ(inputCount), 2)) * Nb);
+        PL = ((float)((1 - p) / (1 - System.Math.Pow(p, step + 1)) * System.Math.Pow(p, step)));
         return System.Convert.ToInt32(PL);
     }
 
-    private float SKOTime()
+    private float SKOTime(int inputCount)
     {
-        CountTime.Push(PR.inputCount);
-        int sum=0;
-        //for (int i=0; CountTime.Count >= i; i++) {  }
-        int[] array = CountTime.ToArray();
-        foreach (int o in array) { sum += o; }
-        float AverValue = sum / CountTime.Count;
-        double SumDev = 0;
-        //for (int i=0; CountTime.Count >=i; i++) { SumDev += System.Math.Pow((CountTime[i] - AverValue), 2); }
-        foreach (int o in array) { SumDev += System.Math.Pow((o - AverValue), 2); }
-        float SKO = (float)System.Math.Sqrt(SumDev/(CountTime.Count-1));
+        CountTime[DontTouchTime++] = inputCount; 
+        sum=0;
+        for (int i=0; i < 10; i++) 
+        { 
+            sum += CountTime[i]; 
+        }
+        AverValue = sum / 10;
+        SumDev = 0;
+        for (int i=0; i < 10; i++) { SumDev += System.Math.Pow((CountTime[i] - AverValue), 2); }
+        SKO = (float)System.Math.Sqrt(SumDev/9);
+        if (DontTouchTime == 9) { DontTouchTime = 0; }
         return SKO;
     }
 
-    private float SKOSpeed()
+    private float SKOServ(int inputCount)
     {
-        return 1;
+        CountServ[DontTouchTimeServ++] = inputCount;
+        sum = 0;
+        for (int i = 0; i < 10; i++)
+        {
+            sum += CountServ[i];
+        }
+        AverValue = sum / 10;
+        SumDev = 0;
+        for (int i = 0; i < 10; i++) { SumDev += System.Math.Pow((CountServ[i] - AverValue), 2); }
+        SKO = (float)System.Math.Sqrt(SumDev / 9);
+        if (DontTouchTimeServ == 9) { DontTouchTimeServ = 0; }
+        return SKO;
     }
 
     // imaginary formula fro dependency of speed from signal power

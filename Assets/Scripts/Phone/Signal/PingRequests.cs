@@ -4,11 +4,9 @@ using System.Text;
 using Ping = System.Net.NetworkInformation.Ping;
 using System.Diagnostics;
 
-
 public class PingRequests : MonoBehaviour
 {
     public string noConnection = "No connection !!!";
-
     public string ping;
     public int inputCount;
     private Ping pingSender = new Ping();
@@ -39,7 +37,6 @@ public class PingRequests : MonoBehaviour
 
                 ping = noConnection;
             }
-
             stopwatch.Stop();
             InputCount++;
             
@@ -48,8 +45,6 @@ public class PingRequests : MonoBehaviour
                 inputCount = InputCount;
                 InputCount = 0;
                 stopwatch.Reset();
-                UnityEngine.Debug.Log("локальная " + InputCount);
-                UnityEngine.Debug.Log("глобальная  " + inputCount);
             }
             
         }

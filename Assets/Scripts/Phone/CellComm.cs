@@ -31,8 +31,6 @@ public class CellComm : MonoBehaviour
 
     public RaycastHit[] lastHits = new RaycastHit[3];  // 0 - Office, 1 - Corridor, 2 - Industrial
 
-    public float signalLoss;
-
     // Start is called before the first frame update
     void Start()
     {
@@ -172,9 +170,25 @@ public class CellComm : MonoBehaviour
 
     public float ShootStart(Vector3 position, GameObject tower)
     {
-        signalLoss = 0;
+        float signalLoss = 0;
 
         ShootRecursion(position, tower);
+
+        return signalLoss;
+    }
+
+    public float NewShoot(Vector3 position, GameObject tower)
+    {
+        float signalLoss = 0;
+        RaycastHit[] hits;
+        Vector3 vectorDistance = tower.transform.position - position;
+
+        hits = Physics.RaycastAll(position, vectorDistance, mask);
+
+
+
+        
+
 
         return signalLoss;
     }
@@ -183,6 +197,7 @@ public class CellComm : MonoBehaviour
     {
         int[] collisions = {0, 0, 0};
         Vector3 vectorDistance = tower.transform.position - position;
+        float signalLoss = 0;
 
         if (Physics.Raycast(position, vectorDistance, out RaycastHit _hit, 1000f, mask))
         {
@@ -211,7 +226,10 @@ public class CellComm : MonoBehaviour
                         float r = tower.transform.localScale.x / 2;
                         float f = signal.FrequencyCalculation(d, r);
 
-                        signalLoss += (float)(10 * Ratios.OfficeAlfa * Math.Log10(_hit.distance) +
+                        Vector3 vectorDistBetweenHits = _hit.point - lastHits[(int)TypeOfBuilding.Office].point;
+                        float distBetweenHits = vectorDistBetweenHits.magnitude;
+
+                        signalLoss += (float)(10 * Ratios.OfficeAlfa * Math.Log10(distBetweenHits) +
                                             Ratios.OfficeBeta +
                                             10 * Ratios.OfficeGamma * Math.Log10(f));
 

@@ -2,25 +2,40 @@ using UnityEngine;
 
 [RequireComponent(typeof(PlayerMotor))]
 public class PlayerController : MonoBehaviour
-{   
+{
     [SerializeField]
     private float speed;
+
     [SerializeField]
-    private float lookspeed = 5f;
+    private float lookspeed;
 
     private PlayerMotor motor;
 
     private Rigidbody rb;
 
+    private void ChangeSpeed()
+    {
+        if (Input.GetKey(KeyCode.LeftShift) != false)
+        {
+            speed = 20f;
+        }
+        else
+        {
+            speed = 10f;
+        }
+    }
+
     private void Start()
     {
         motor = GetComponent<PlayerMotor>();
         rb = GetComponent<Rigidbody>();
-
     }
-
+    
     private void FixedUpdate()
     {
+        ChangeSpeed();
+
+
         float xMov = Input.GetAxisRaw("Horizontal");
         float zMov = Input.GetAxisRaw("Vertical");
 

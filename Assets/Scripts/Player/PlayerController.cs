@@ -4,19 +4,22 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {   
     [SerializeField]
-    private float speed = 5f;
+    private float speed;
     [SerializeField]
     private float lookspeed = 5f;
 
     private PlayerMotor motor;
 
+    private Rigidbody rb;
+
     private void Start()
     {
         motor = GetComponent<PlayerMotor>();
+        rb = GetComponent<Rigidbody>();
 
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         float xMov = Input.GetAxisRaw("Horizontal");
         float zMov = Input.GetAxisRaw("Vertical");
@@ -25,8 +28,12 @@ public class PlayerController : MonoBehaviour
         Vector3 movVer = transform.forward * zMov;
 
         Vector3 velocity = (movHor + movVer).normalized * speed;
+        if (rb.velocity.magnitude >= speed)
+        {
+            rb.velocity = rb.velocity.normalized * speed;
+        }
 
-        motor.Move(velocity);
+        rb.AddForce(velocity);
 
         float yRot = Input.GetAxisRaw("Mouse X");
         Vector3 rotation = new Vector3(0f, yRot, 0f) * lookspeed;

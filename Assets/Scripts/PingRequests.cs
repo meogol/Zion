@@ -26,7 +26,7 @@ public class PingRequests : MonoBehaviour
             reply = pingSender.Send("yandex.ru", timeout, buffer, pingOptions);
             if (reply.Status == IPStatus.Success)
             {
-                Debug.Log(reply.Address);
+                //Debug.Log(reply.Address);
 
                 ping = reply.RoundtripTime.ToString();
             }

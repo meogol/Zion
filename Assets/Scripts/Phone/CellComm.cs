@@ -16,7 +16,7 @@ public class CellComm : MonoBehaviour
     public TextMeshPro text { get; set; }
     public Dictionary<string, float> connections = new Dictionary<string, float>();
 
-    public Dictionary<string, int> collisionsCount = new Dictionary<string, int>();
+    public Dictionary<string, float> signalLossCount = new Dictionary<string, float>();
     public GameObject sphereObj;
     public CellSphere sphere;
     public Signal signal { get; set; }
@@ -30,6 +30,9 @@ public class CellComm : MonoBehaviour
     private Thread pingThread;
 
     public RaycastHit[] lastHits = new RaycastHit[3];  // 0 - Office, 1 - Corridor, 2 - Industrial
+
+    public int[] collisions = new int[3]; // 0 - Office, 1 - Corridor, 2 - Industrial
+
 
     // Start is called before the first frame update
     void Start()
@@ -90,9 +93,7 @@ public class CellComm : MonoBehaviour
                 tower = GameObject.Find(key);
                 connections[key] = GetPower(obj, tower);
 
-                /*int[] col = ShootStart(transform.position, tower);
-                int sumOfColl = col[0] + col[1] + col[2];
-                collisionsCount[key] = sumOfColl;*/
+                signalLossCount[key] = NewShoot(transform.position, tower);
             }
 
         }
@@ -117,7 +118,7 @@ public class CellComm : MonoBehaviour
 
         float distance = DistanceÑalculation(phone, tower);
         float radius = tower.transform.localScale.x / 2;
-        newSignal.ChangeSignal(distance, collisionsCount[tower.name], radius, 
+        newSignal.ChangeSignal(distance, signalLossCount[tower.name], radius, 
                                 tower.GetComponent<CellSphere>().conectedPhones.Count);
       
         return newSignal.power;
@@ -144,10 +145,10 @@ public class CellComm : MonoBehaviour
             try
             {
                 bufferPing = pingCaller.ping;
-                Debug.Log(bufferPing);
+                //Debug.Log(bufferPing);
                 text.text = $"{signal.GetNetIndexator()}\n{signal.speed} {signal.signalType}\n_____________\n" +
                     $"{device}\n\nConnected to {sphereObj.name}\n\n" +
-                     $"Signal:\n {signal.power} dBm\n\nCollisions:\n{collisionsCount[sphereObj.name]}" + 
+                     $"Signal:\n {signal.power} dBm\n\nCollisions:\n{signalLossCount[sphereObj.name]}" + 
                      $"\nPing:\n {bufferPing}";
                 
             }
@@ -168,29 +169,114 @@ public class CellComm : MonoBehaviour
         }
     }
 
-    public float ShootStart(Vector3 position, GameObject tower)
-    {
-        float signalLoss = 0;
-
-        ShootRecursion(position, tower);
-
-        return signalLoss;
-    }
+    
 
     public float NewShoot(Vector3 position, GameObject tower)
     {
         float signalLoss = 0;
-        RaycastHit[] hits;
+        RaycastHit[] allHits;
         Vector3 vectorDistance = tower.transform.position - position;
 
-        hits = Physics.RaycastAll(position, vectorDistance, mask);
+        allHits = Physics.RaycastAll(position, vectorDistance, mask);
 
 
 
-        
+        Array.Sort(allHits, CellComm.CompareByDictance);
 
+        collisions[0] = 0; collisions[1] = 0; collisions[2] = 0;
+
+        foreach (RaycastHit hit in allHits)
+        {
+            signalLoss = SignalLostCalculation(hit, collisions, signalLoss, tower);
+        }
 
         return signalLoss;
+    }
+
+    public float SignalLostCalculation(RaycastHit hit, int[] collisions, float signalLoss, GameObject tower)
+    {
+        switch (hit.collider.tag)
+        {
+            case "Office":
+
+                collisions[(int)TypeOfBuilding.Office]++;
+
+                if (collisions[(int)TypeOfBuilding.Office] % 2 == 1)
+                {
+                    lastHits[(int)TypeOfBuilding.Office] = hit;
+                }
+                else
+                {
+                    float d = DistanceÑalculation(obj, tower);
+                    float r = tower.transform.localScale.x / 2;
+                    float f = signal.FrequencyCalculation(d, r);
+
+                    Vector3 vectorDistBetweenHits = hit.point - lastHits[(int)TypeOfBuilding.Office].point;
+                    float distBetweenHits = vectorDistBetweenHits.magnitude;
+                    Debug.Log(distBetweenHits);
+
+                    signalLoss += (float)(10 * Ratios.OfficeAlfa * Math.Log10(distBetweenHits) +
+                                        Ratios.OfficeBeta +
+                                        10 * Ratios.OfficeGamma * Math.Log10(f/ Mathf.Pow(10, 9)));
+                }
+
+                break;
+
+            case "Corridor":
+
+                collisions[(int)TypeOfBuilding.Corridor]++;
+
+                if (collisions[(int)TypeOfBuilding.Corridor] % 2 == 1)
+                {
+                    lastHits[(int)TypeOfBuilding.Corridor] = hit;
+                }
+                else
+                {
+                    float d = DistanceÑalculation(obj, tower);
+                    float r = tower.transform.localScale.x / 2;
+                    float f = signal.FrequencyCalculation(d, r);
+
+                    Vector3 vectorDistBetweenHits = hit.point - lastHits[(int)TypeOfBuilding.Corridor].point;
+                    float distBetweenHits = vectorDistBetweenHits.magnitude;
+
+                    signalLoss += (float)(10 * Ratios.CorridorAlfa * Math.Log10(hit.distance) +
+                                        Ratios.CorridorBeta +
+                                        10 * Ratios.CorridorGamma * Math.Log10(f/ Mathf.Pow(10, 9)));
+                }
+
+                break;
+
+            case "Industrial":
+
+                collisions[(int)TypeOfBuilding.Industrial]++;
+
+                if (collisions[(int)TypeOfBuilding.Industrial] % 2 == 1)
+                {
+                    lastHits[(int)TypeOfBuilding.Industrial] = hit;
+                }
+                else
+                {
+                    float d = DistanceÑalculation(obj, tower);
+                    float r = tower.transform.localScale.x / 2;
+                    float f = signal.FrequencyCalculation(d, r);
+
+                    Vector3 vectorDistBetweenHits = hit.point - lastHits[(int)TypeOfBuilding.Industrial].point;
+                    float distBetweenHits = vectorDistBetweenHits.magnitude;
+
+                    signalLoss += (float)(10 * Ratios.IndustrialAlfa * Math.Log10(hit.distance) +
+                                        Ratios.IndustrialBeta +
+                                        10 * Ratios.IndustrialGamma * Math.Log10(f/ Mathf.Pow(10, 9)));
+                }
+
+                break;
+
+        }
+        return signalLoss;
+    }
+
+    public static int CompareByDictance(RaycastHit hit1, RaycastHit hit2)
+    {
+        return hit1.distance.CompareTo(hit2.distance);
     }
 
     public int[] ShootRecursion(Vector3 position, GameObject tower)
@@ -212,71 +298,7 @@ public class CellComm : MonoBehaviour
                 collisions += Shoot(position, tower);
             }*/
 
-            switch (_hit.collider.tag)
-            {
-                case "Office":
-                    collisions[(int)TypeOfBuilding.Office]++;
-                    if (collisions[(int)TypeOfBuilding.Office]%2 == 1)
-                    {
-                        lastHits[(int)TypeOfBuilding.Office] = _hit;
-                    }
-                    else
-                    {
-                        float d = DistanceÑalculation(obj, tower);
-                        float r = tower.transform.localScale.x / 2;
-                        float f = signal.FrequencyCalculation(d, r);
-
-                        Vector3 vectorDistBetweenHits = _hit.point - lastHits[(int)TypeOfBuilding.Office].point;
-                        float distBetweenHits = vectorDistBetweenHits.magnitude;
-
-                        signalLoss += (float)(10 * Ratios.OfficeAlfa * Math.Log10(distBetweenHits) +
-                                            Ratios.OfficeBeta +
-                                            10 * Ratios.OfficeGamma * Math.Log10(f));
-
-                        
-                    }
-
-                    break;
-
-                case "Corridor":
-                    collisions[(int)TypeOfBuilding.Corridor]++;
-                    if (collisions[(int)TypeOfBuilding.Corridor] % 2 == 1)
-                    {
-                        lastHits[(int)TypeOfBuilding.Corridor] = _hit;
-                    }
-                    else
-                    {
-                        float d = DistanceÑalculation(obj, tower);
-                        float r = tower.transform.localScale.x / 2;
-                        float f = signal.FrequencyCalculation(d, r);
-
-                        signalLoss += (float)(10 * Ratios.CorridorAlfa * Math.Log10(_hit.distance) +
-                                            Ratios.CorridorBeta +
-                                            10 * Ratios.CorridorGamma * Math.Log10(f));
-                    }
-
-                    break;
-
-                case "Industrial":
-                    collisions[(int)TypeOfBuilding.Industrial]++;
-                    if (collisions[(int)TypeOfBuilding.Industrial] % 2 == 1)
-                    {
-                        lastHits[(int)TypeOfBuilding.Industrial] = _hit;
-                    }
-                    else
-                    {
-                        float d = DistanceÑalculation(obj, tower);
-                        float r = tower.transform.localScale.x / 2;
-                        float f = signal.FrequencyCalculation(d, r);
-
-                        signalLoss += (float)(10 * Ratios.IndustrialAlfa * Math.Log10(_hit.distance) +
-                                            Ratios.IndustrialBeta +
-                                            10 * Ratios.IndustrialGamma * Math.Log10(f));
-                    }
-
-                    break;
-
-            }
+            
         }
 
 

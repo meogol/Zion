@@ -37,9 +37,9 @@ public class Signal
         return speed + "\t" + signalType;
     }
 
-    public void ChangeSignal(float distance, int collision, float radius, int countOfUsers)
+    public void ChangeSignal(float distance, float signalLoss, float radius, int countOfUsers)
     {
-        this.power = ChangePower(distance, collision, radius, countOfUsers);
+        this.power = ChangePower(distance, signalLoss, radius, countOfUsers);
         Signal changedSignal = ChangeSpeed(power);
         this.speedMBPS = changedSignal.speedMBPS;
         this.speed = changedSignal.speed;
@@ -61,16 +61,16 @@ public class Signal
 
     public float FrequencyCalculation(float distance, float radius)
     {
-        float minGHz = 30;
-        float maxGHz = 300;
+        float minHz = 30;
+        float maxHz = 300;
 
-        float coefficient = -(minGHz - maxGHz) / radius;
+        float coefficient = -(minHz - maxHz) / radius;
         float frequency = (30 + distance * coefficient) * Mathf.Pow(10, 9);
 
         return frequency;
     }
 
-    public int ChangePower(float distance, int collision, float radius, int countOfUsers)
+    public int ChangePower(float distance, float signalLoss, float radius, int countOfUsers)
     {
         this.distance = distance;
         int AntenaPower = 40000; //�������� ���������� �� ������ ������� �������
@@ -78,26 +78,15 @@ public class Signal
         
         float f = FrequencyCalculation(distance, radius); //�������
         float powerOfTower = AntenaPower * Mathf.Pow((c / (4 * Mathf.PI * distance * f)), 2);//�������� �����
-        float A = 1, B = 0;//������������ ��� ������, ��� �=5 � �=0.03 ��� ������ ��������,
-                           //� �=10 � �=5 ��� �������
+        
+        float signalPower = 15 * Mathf.Log10( powerOfTower * x) + 30 - signalLoss;//���� �������
 
-        if ((collision >= 1) & (collision < 2))
-        {
-            A = 5;
-            B = 0.03f;
-        }
-        else if (collision >= 2)
-        {
-            A = 10;
-            B = 5;
-        }
-        float Bpl = 10 * Mathf.Log10(A + B * Mathf.Pow((f / Mathf.Pow(10, 9)), 2));//������ ������� � ����������� �� ���������� �������
-
-        float signalPower = 15 * Mathf.Log10( powerOfTower * x) + 30 - Bpl;//���� �������
+        Debug.Log(signalLoss);
+        Debug.Log(radius);
+        
 
 
-
-        if(countOfUsers > 256)
+        if (countOfUsers > 256)
         {
             signalPower -= System.Convert.ToInt32(0.2 * countOfUsers);
         }

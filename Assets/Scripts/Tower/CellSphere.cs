@@ -49,7 +49,7 @@ public class CellSphere : MonoBehaviour
             float distance = Mathf.Sqrt(vectorDistance.x * vectorDistance.x +
                 vectorDistance.y * vectorDistance.y + vectorDistance.z * vectorDistance.z);
 
-            phone.collisionsCount.Add(obj.name, phone.Shoot(phoneObject.transform.position, obj));
+            phone.signalLossCount.Add(obj.name, phone.NewShoot(phoneObject.transform.position, obj));
             float power = phone.GetPower(phoneObject, obj);
             phone.connections.Add(obj.name, power);
             conectedPhones.Add(phone);
@@ -62,7 +62,7 @@ public class CellSphere : MonoBehaviour
         if (phone.connections.ContainsKey(obj.name))
         {
             phone.connections.Remove(obj.name);
-            phone.collisionsCount.Remove(obj.name);
+            phone.signalLossCount.Remove(obj.name);
             conectedPhones.Remove(phone);
 
         }

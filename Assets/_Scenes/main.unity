@@ -242,6 +242,10 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Office
       objectReference: {fileID: 0}
+    - target: {fileID: 3634466446075005912, guid: ebb2664204d2c53469765d3969afb976, type: 3}
+      propertyPath: m_TagString
+      value: Office
+      objectReference: {fileID: 0}
     - target: {fileID: 4080198016641030059, guid: ebb2664204d2c53469765d3969afb976, type: 3}
       propertyPath: m_TagString
       value: Office
@@ -288,11 +292,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6061892368953082819, guid: ebb2664204d2c53469765d3969afb976, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 975.7
+      value: 975.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6061892368953082819, guid: ebb2664204d2c53469765d3969afb976, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 18.4
       objectReference: {fileID: 0}
     - target: {fileID: 6061892368953082819, guid: ebb2664204d2c53469765d3969afb976, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 1936.4
+      value: 1929
       objectReference: {fileID: 0}
     - target: {fileID: 6434199923860394854, guid: ebb2664204d2c53469765d3969afb976, type: 3}
       propertyPath: m_TagString
@@ -335,6 +343,10 @@ PrefabInstance:
       value: Office
       objectReference: {fileID: 0}
     - target: {fileID: 7828861514656961905, guid: ebb2664204d2c53469765d3969afb976, type: 3}
+      propertyPath: m_TagString
+      value: Office
+      objectReference: {fileID: 0}
+    - target: {fileID: 7884061567079396311, guid: ebb2664204d2c53469765d3969afb976, type: 3}
       propertyPath: m_TagString
       value: Office
       objectReference: {fileID: 0}

@@ -48,15 +48,8 @@ public class PlayerMotor : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        PerformMove();
         PerformRotation();
 
-    }
-
-    void PerformMove()
-    {
-        if (velocity != Vector3.zero)
-            rb.MovePosition(rb.position + velocity * Time.fixedDeltaTime);
     }
 
     void PerformRotation()

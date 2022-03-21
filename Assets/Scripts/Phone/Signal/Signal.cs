@@ -20,10 +20,10 @@ public class Signal
     public float SKO;
     private int DontTouchTime = 0;
     private int DontTouchTimeServ = 0;
-    float p = 1/256;//TODO:loading the system n/256, n - count users
-    int Nb = 2;//TODO:buffer size in MB
-    float step;//TODO:power - law construction
-    float PL;//TODO: Pocket Loss
+    private int Nb = 2;//TODO:buffer size in MB
+    private float step;//TODO:power - law construction
+    public float PL;//TODO: Packet Loss
+    public float p;//TODO:loading the system n/256, n - count users
 
     public ThrottledStream stream { get; set; }
 
@@ -55,7 +55,6 @@ public class Signal
         this.speedMBPS = changedSignal.speedMBPS;
         this.speed = changedSignal.speed;
         this.signalType = changedSignal.signalType;
-        //this.pocketLoss = PocketLoss();
 
         //stream.MaxBytesPerSecond = speedMBPS * 125000;
 
@@ -67,7 +66,6 @@ public class Signal
         this.speedMBPS = changedSignal.speedMBPS;
         this.speed = changedSignal.speed;
         this.signalType = changedSignal.signalType;
-        //this.pocketLoss = PocketLoss();
 
         //stream.MaxBytesPerSecond = speedMBPS * 125000;
     }
@@ -110,8 +108,9 @@ public class Signal
         return System.Convert.ToInt32(signalPower);
     }
 
-    public int PocketLoss(int inputCount)
+    public int PacketLoss(int inputCount, int countOfUsers = 1)
     {
+        p = countOfUsers / 256;
         step = (float)(2 / (System.Math.Pow(SKOTime(inputCount), 2) + System.Math.Pow(SKOServ(inputCount), 2)) * Nb);
         PL = ((float)((1 - p) / (1 - System.Math.Pow(p, step + 1)) * System.Math.Pow(p, step)));
         return System.Convert.ToInt32(PL);

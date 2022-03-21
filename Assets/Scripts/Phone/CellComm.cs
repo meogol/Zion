@@ -140,7 +140,7 @@ public class CellComm : MonoBehaviour
                 Debug.Log(bufferPing);
                 text.text = $"{signal.GetNetIndexator()}\n{signal.speed} {signal.signalType}\n_____________\n" +
                     $"{device}\nConnected to {sphereObj.name}\n\n" +
-                    $"PL: {signal.PocketLoss(bufferInputCount)}%\n"+
+                    $"PL: {signal.PacketLoss(bufferInputCount)}%\n"+
                      $"Signal:\n {signal.power} dBm\n\nCollisions:\n{collisionsCount[sphereObj.name]}" + 
                      $"\nPing:\n {bufferPing}";
                 

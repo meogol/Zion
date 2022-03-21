@@ -1,6 +1,7 @@
 using System.IO;
 using UnityEngine;
-
+using System.Collections.Generic;
+using System.Threading;
 
 public class Signal
 {
@@ -9,10 +10,20 @@ public class Signal
     public int power { get; set; }
     public SignalType signalType { get; set; }
 
-    private int c = 299792458; //�������� ����� � �/�
+    private int c = 299792458;
+    private int[] CountTime = new int[10] {1, 1, 1, 1, 1, 1, 1, 1, 1, 1};
+    private int[] CountServ = new int[10] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
     private float distance { get; set; }
-
-
+    private int sum;
+    private double SumDev;
+    private float AverValue;
+    public float SKO;
+    private int DontTouchTime = 0;
+    private int DontTouchTimeServ = 0;
+    private int Nb = 2;//TODO:buffer size in MB
+    private float step;//TODO:power - law construction
+    public float PL;//TODO: Packet Loss
+    public float p;//TODO:loading the system n/256, n - count users
 
     public ThrottledStream stream { get; set; }
 
@@ -95,9 +106,47 @@ public class Signal
         }
 
         return System.Convert.ToInt32(signalPower);
-
     }
 
+    public int PacketLoss(int inputCount, int countOfUsers = 1)
+    {
+        p = countOfUsers / 256;
+        step = (float)(2 / (System.Math.Pow(SKOTime(inputCount), 2) + System.Math.Pow(SKOServ(inputCount), 2)) * Nb);
+        PL = ((float)((1 - p) / (1 - System.Math.Pow(p, step + 1)) * System.Math.Pow(p, step)));
+        return System.Convert.ToInt32(PL);
+    }
+
+    private float SKOTime(int inputCount)
+    {
+        CountTime[DontTouchTime++] = inputCount; 
+        sum=0;
+        for (int i=0; i < 10; i++) 
+        { 
+            sum += CountTime[i]; 
+        }
+        AverValue = sum / 10;
+        SumDev = 0;
+        for (int i=0; i < 10; i++) { SumDev += System.Math.Pow((CountTime[i] - AverValue), 2); }
+        SKO = (float)System.Math.Sqrt(SumDev/9);
+        if (DontTouchTime == 9) { DontTouchTime = 0; }
+        return SKO;
+    }
+
+    private float SKOServ(int inputCount)
+    {
+        CountServ[DontTouchTimeServ++] = (int)decimal.Round(1000/inputCount);
+        sum = 0;
+        for (int i = 0; i < 10; i++)
+        {
+            sum += CountServ[i];
+        }
+        AverValue = sum / 10;
+        SumDev = 0;
+        for (int i = 0; i < 10; i++) { SumDev += System.Math.Pow((CountServ[i] - AverValue), 2); }
+        SKO = (float)System.Math.Sqrt(SumDev / 9);
+        if (DontTouchTimeServ == 9) { DontTouchTimeServ = 0; }
+        return SKO;
+    }
 
     // imaginary formula fro dependency of speed from signal power
     public Signal ChangeSpeed(int signalPower)

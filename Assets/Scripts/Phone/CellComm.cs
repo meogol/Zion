@@ -27,6 +27,8 @@ public class CellComm : MonoBehaviour
 
     public string bufferPing;
 
+    public int bufferInputCount;
+
     private Thread pingThread;
 
     // Start is called before the first frame update
@@ -40,6 +42,7 @@ public class CellComm : MonoBehaviour
 
         pingThread = new Thread(pingCaller.CallPing);
         pingThread.Start();
+        Thread.Sleep(1000);
     }
 
     private void OnApplicationQuit()
@@ -133,9 +136,11 @@ public class CellComm : MonoBehaviour
             try
             {
                 bufferPing = pingCaller.ping;
+                bufferInputCount = pingCaller.inputCount;
                 Debug.Log(bufferPing);
                 text.text = $"{signal.GetNetIndexator()}\n{signal.speed} {signal.signalType}\n_____________\n" +
-                    $"{device}\n\nConnected to {sphereObj.name}\n\n" +
+                    $"{device}\nConnected to {sphereObj.name}\n\n" +
+                    $"PL: {signal.PacketLoss(bufferInputCount)}%\n"+
                      $"Signal:\n {signal.power} dBm\n\nCollisions:\n{collisionsCount[sphereObj.name]}" + 
                      $"\nPing:\n {bufferPing}";
                 

@@ -134,7 +134,7 @@ public class Signal
 
     private float SKOServ(int inputCount)
     {
-        CountServ[DontTouchTimeServ++] = inputCount;
+        CountServ[DontTouchTimeServ++] = (int)decimal.Round(1000/inputCount);
         sum = 0;
         for (int i = 0; i < 10; i++)
         {

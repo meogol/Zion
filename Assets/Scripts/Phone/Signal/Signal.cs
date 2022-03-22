@@ -112,16 +112,8 @@ public class Signal
     public int PacketLoss(int inputCount, int countOfUsers = 1)
     {
         p = (float)(countOfUsers / 256.0);
-        UnityEngine.Debug.Log("Загрузка " + p);
-        float n = (float)(SKOTime(inputCount) / 10.0);
-        UnityEngine.Debug.Log("SKOTime=" + n);
-        float v = (float)(SKOServ(inputCount) / 10.0);
-        UnityEngine.Debug.Log("SKOServ=" + v);
-        step = (float)(2 / (System.Math.Pow(n, 2) + System.Math.Pow(v, 2)) * Nb);
-        UnityEngine.Debug.Log("step=" + step);
+        step = (float)(2 / (System.Math.Pow((float)(SKOTime(inputCount) / 10.0), 2) + System.Math.Pow((float)(SKOServ(inputCount) / 10.0), 2)) * Nb);
         PL = ((float)((1 - p) / (1 - System.Math.Pow(p, step + 1)) * System.Math.Pow(p, step)));
-        UnityEngine.Debug.Log("PL float=" + PL);
-        UnityEngine.Debug.Log("PL int=" + System.Convert.ToInt32(PL * 100));
         return System.Convert.ToInt32(PL*100);
     }
 

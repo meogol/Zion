@@ -42,7 +42,7 @@ public class CellComm : MonoBehaviour
 
         pingThread = new Thread(pingCaller.CallPing);
         pingThread.Start();
-        Thread.Sleep(1000);
+        Thread.Sleep(2000);
     }
 
     private void OnApplicationQuit()

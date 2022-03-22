@@ -12,9 +12,9 @@ public class Signal
 
     private int c = 299792458;
     private int[] CountTime = new int[10] {1, 1, 1, 1, 1, 1, 1, 1, 1, 1};
-    private int[] CountServ = new int[10] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
+    private float[] CountServ = new float[10] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
     private float distance { get; set; }
-    private int sum;
+    private float sum;
     private double SumDev;
     private float AverValue;
     public float SKO;
@@ -111,9 +111,9 @@ public class Signal
     public int PacketLoss(int inputCount, int countOfUsers = 1)
     {
         p = countOfUsers / 256;
-        step = (float)(2 / (System.Math.Pow(SKOTime(inputCount), 2) + System.Math.Pow(SKOServ(inputCount), 2)) * Nb);
+        step = (float)(2 / (System.Math.Pow(SKOTime(inputCount)/10, 2) + System.Math.Pow(SKOServ(inputCount)/10, 2)) * Nb);
         PL = ((float)((1 - p) / (1 - System.Math.Pow(p, step + 1)) * System.Math.Pow(p, step)));
-        return System.Convert.ToInt32(PL);
+        return System.Convert.ToInt32(PL*100);
     }
 
     private float SKOTime(int inputCount)
@@ -134,7 +134,7 @@ public class Signal
 
     private float SKOServ(int inputCount)
     {
-        CountServ[DontTouchTimeServ++] = (int)decimal.Round(1000/inputCount);
+        CountServ[DontTouchTimeServ++] = (int)decimal.Round(1000/inputCount)/1000;
         sum = 0;
         for (int i = 0; i < 10; i++)
         {

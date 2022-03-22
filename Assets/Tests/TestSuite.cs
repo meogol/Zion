@@ -6,41 +6,67 @@ using UnityEngine.TestTools;
 
 public class TestSuite
 {
-    public Signal signal { get; set; }
+    public Signal signal = new Signal();
+    private float distance;
+    private int collision;
+    private int radius = 500;
+    private int received;
+    private int expect;
+    private int countUsers;
+    private int[] CountTime = new int[10] {50, 45, 67, 83, 15, 72, 34, 60, 82, 46};
     [Test]
     public void TestPowerSignalWithoutCollision()
     {
-        signal = new Signal();
-        float distance = 6;
-        int collision = 0;
-        float radius = 500;
+        distance = 6;
+        collision = 0;
+        countUsers = 1;
         signal.ChangeSignal(distance, collision, radius, 1);
-        int received = signal.power;
-        int expect = -14;
+        received = signal.power;
+        expect = -14;
         Assert.AreEqual(expect, received);
     }
     [Test]
     public void TestPowerSignalWithOneCollision()
     {
-        signal = new Signal();
-        float distance = 482.7255f;
-        int collision = 1;
-        float radius = 500;
-        signal.ChangeSignal(distance, collision, radius, 1);
-        int received = signal.power;
-        int expect = -134;
+        distance = 482.7255f;
+        collision = 1;
+        countUsers = 1;
+        signal.ChangeSignal(distance, collision, radius, countUsers);
+        received = signal.power;
+        expect = -134;
         Assert.AreEqual(expect, received);
     }
     [Test]
     public void TestPowerSignalWithTwoCollision()
     {
-        signal = new Signal();
-        float distance = 463.7243f;
-        int collision = 2;
-        float radius = 500;
-        signal.ChangeSignal(distance, collision, radius, 1);
-        int received = signal.power;
-        int expect = -154;
+        distance = 463.7243f;
+        collision = 2;
+        countUsers = 1;
+        signal.ChangeSignal(distance, collision, radius, countUsers);
+        received = signal.power;
+        expect = -154;
+        Assert.AreEqual(expect, received);
+    }
+    [Test]
+    public void TestPackLossOneUser()
+    {
+        countUsers = 1;
+        for (int i=0; i<10; i++)
+        {
+            received = signal.PacketLoss(CountTime[i], countUsers);
+        }
+        expect = 2;
+        Assert.AreEqual(expect, received);
+    }
+    [Test]
+    public void TestPackLossOneHundredUser()
+    {
+        countUsers = 100;
+        for (int i = 0; i < 10; i++)
+        {
+            received = signal.PacketLoss(CountTime[i], countUsers);
+        }
+        expect = 41;
         Assert.AreEqual(expect, received);
     }
 }

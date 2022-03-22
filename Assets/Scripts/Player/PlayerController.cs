@@ -17,11 +17,11 @@ public class PlayerController : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.LeftShift) != false)
         {
-            speed = 20f;
+            speed = 50f;
         }
         else
         {
-            speed = 10f;
+            speed = 30f;
         }
     }
 
@@ -48,7 +48,7 @@ public class PlayerController : MonoBehaviour
             rb.velocity = rb.velocity.normalized * speed;
         }
 
-        rb.AddForce(velocity);
+        rb.AddForce(velocity, ForceMode.Impulse);
 
         float yRot = Input.GetAxisRaw("Mouse X");
         Vector3 rotation = new Vector3(0f, yRot, 0f) * lookspeed;

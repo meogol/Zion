@@ -13,7 +13,7 @@ public class TestSuite
     private int received;
     private int expect;
     private int countUsers;
-    private int[] CountTime = new int[10] {50, 45, 67, 83, 15, 72, 34, 60, 82, 46};
+    private int[] CountTime = new int[10] {50, 45, 67, 83, 15, 72, 34, 19, 82, 46};
     [Test]
     public void TestPowerSignalWithoutCollision()
     {

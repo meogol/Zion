@@ -2,6 +2,7 @@ using System.IO;
 using UnityEngine;
 using System.Collections.Generic;
 using System.Threading;
+using System;
 
 public class Signal
 {
@@ -11,7 +12,7 @@ public class Signal
     public SignalType signalType { get; set; }
 
     private int c = 299792458;
-    private int[] CountTime = new int[10] {1, 1, 1, 1, 1, 1, 1, 1, 1, 1};
+    private float[] CountTime = new float[10] {1, 1, 1, 1, 1, 1, 1, 1, 1, 1};
     private float[] CountServ = new float[10] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
     private float distance { get; set; }
     private float sum;
@@ -110,9 +111,17 @@ public class Signal
 
     public int PacketLoss(int inputCount, int countOfUsers = 1)
     {
-        p = countOfUsers / 256;
-        step = (float)(2 / (System.Math.Pow(SKOTime(inputCount)/10, 2) + System.Math.Pow(SKOServ(inputCount)/10, 2)) * Nb);
+        p = (float)(countOfUsers / 256.0);
+        UnityEngine.Debug.Log("Загрузка " + p);
+        float n = (float)(SKOTime(inputCount) / 10.0);
+        UnityEngine.Debug.Log("SKOTime=" + n);
+        float v = (float)(SKOServ(inputCount) / 10.0);
+        UnityEngine.Debug.Log("SKOServ=" + v);
+        step = (float)(2 / (System.Math.Pow(n, 2) + System.Math.Pow(v, 2)) * Nb);
+        UnityEngine.Debug.Log("step=" + step);
         PL = ((float)((1 - p) / (1 - System.Math.Pow(p, step + 1)) * System.Math.Pow(p, step)));
+        UnityEngine.Debug.Log("PL float=" + PL);
+        UnityEngine.Debug.Log("PL int=" + System.Convert.ToInt32(PL * 100));
         return System.Convert.ToInt32(PL*100);
     }
 
@@ -124,26 +133,32 @@ public class Signal
         { 
             sum += CountTime[i]; 
         }
-        AverValue = sum / 10;
+        AverValue = (float)(sum / 10.0);
         SumDev = 0;
-        for (int i=0; i < 10; i++) { SumDev += System.Math.Pow((CountTime[i] - AverValue), 2); }
-        SKO = (float)System.Math.Sqrt(SumDev/9);
+        for (int i=0; i < 10; i++) 
+        { 
+            SumDev += System.Math.Pow((CountTime[i] - AverValue), 2); 
+        }
+        SKO = (float)System.Math.Sqrt(SumDev/10.0);
         if (DontTouchTime == 9) { DontTouchTime = 0; }
         return SKO;
     }
 
     private float SKOServ(int inputCount)
     {
-        CountServ[DontTouchTimeServ++] = (int)decimal.Round(1000/inputCount)/1000;
+        CountServ[DontTouchTimeServ++] = Mathf.Round(1000 / inputCount)/100;
         sum = 0;
         for (int i = 0; i < 10; i++)
         {
             sum += CountServ[i];
         }
-        AverValue = sum / 10;
+        AverValue = (float)(sum / 10.0);
         SumDev = 0;
-        for (int i = 0; i < 10; i++) { SumDev += System.Math.Pow((CountServ[i] - AverValue), 2); }
-        SKO = (float)System.Math.Sqrt(SumDev / 9);
+        for (int i = 0; i < 10; i++) 
+        { 
+            SumDev += System.Math.Pow((CountServ[i] - AverValue), 2); 
+        }
+        SKO = (float)System.Math.Sqrt(SumDev / 10.0);
         if (DontTouchTimeServ == 9) { DontTouchTimeServ = 0; }
         return SKO;
     }

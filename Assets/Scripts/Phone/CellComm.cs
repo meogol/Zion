@@ -5,6 +5,8 @@ using TMPro;
 using System;
 using System.Linq;
 using System.Threading;
+using System.Diagnostics;
+
 
 public class CellComm : MonoBehaviour
 {
@@ -20,8 +22,10 @@ public class CellComm : MonoBehaviour
     public GameObject sphereObj;
     public CellSphere sphere;
     public Signal signal { get; set; }
+    private int PacketLoss = 0;
     [SerializeField]
     private LayerMask mask;
+    private Stopwatch stopwatch = new Stopwatch();
 
     private PingRequests pingCaller = new PingRequests();
 
@@ -42,7 +46,8 @@ public class CellComm : MonoBehaviour
 
         pingThread = new Thread(pingCaller.CallPing);
         pingThread.Start();
-        Thread.Sleep(1000);
+        Thread.Sleep(2000);
+        stopwatch.Start();
     }
 
     private void OnApplicationQuit()
@@ -77,7 +82,7 @@ public class CellComm : MonoBehaviour
         }
         catch (Exception e)
         {
-            Debug.LogError(e);
+            UnityEngine.Debug.LogError(e);
         }
     }
 
@@ -97,7 +102,7 @@ public class CellComm : MonoBehaviour
         }
         catch (Exception e)
         {
-            Debug.LogError(e.Message);
+            UnityEngine.Debug.LogError(e.Message);
         }
     }
 
@@ -136,18 +141,25 @@ public class CellComm : MonoBehaviour
             try
             {
                 bufferPing = pingCaller.ping;
-                bufferInputCount = pingCaller.inputCount;
-                Debug.Log(bufferPing);
+                if (stopwatch.ElapsedMilliseconds >= 1000)
+                {
+                    bufferInputCount = pingCaller.inputCount;
+                    PacketLoss = signal.PacketLoss(bufferInputCount);
+                    stopwatch.Stop();
+                    stopwatch.Reset();
+                    stopwatch.Start();
+                }
+                UnityEngine.Debug.Log(bufferPing);
                 text.text = $"{signal.GetNetIndexator()}\n{signal.speed} {signal.signalType}\n_____________\n" +
                     $"{device}\nConnected to {sphereObj.name}\n\n" +
-                    $"PL: {signal.PacketLoss(bufferInputCount)}%\n"+
+                    $"PL: {PacketLoss}%\n"+
                      $"Signal:\n {signal.power} dBm\n\nCollisions:\n{collisionsCount[sphereObj.name]}" + 
                      $"\nPing:\n {bufferPing}";
                 
             }
             catch (Exception e)
             {
-                Debug.LogError(e.Message);
+                UnityEngine.Debug.LogError(e.Message);
             }
 
 

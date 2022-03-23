@@ -2,25 +2,40 @@ using UnityEngine;
 
 [RequireComponent(typeof(PlayerMotor))]
 public class PlayerController : MonoBehaviour
-{   
+{
     [SerializeField]
     private float speed;
+
     [SerializeField]
-    private float lookspeed = 5f;
+    private float lookspeed;
 
     private PlayerMotor motor;
 
     private Rigidbody rb;
 
+    private void ChangeSpeed()
+    {
+        if (Input.GetKey(KeyCode.LeftShift) != false)
+        {
+            speed = 50f;
+        }
+        else
+        {
+            speed = 30f;
+        }
+    }
+
     private void Start()
     {
         motor = GetComponent<PlayerMotor>();
         rb = GetComponent<Rigidbody>();
-
     }
-
+    
     private void FixedUpdate()
     {
+        ChangeSpeed();
+
+
         float xMov = Input.GetAxisRaw("Horizontal");
         float zMov = Input.GetAxisRaw("Vertical");
 
@@ -33,7 +48,7 @@ public class PlayerController : MonoBehaviour
             rb.velocity = rb.velocity.normalized * speed;
         }
 
-        rb.AddForce(velocity);
+        rb.AddForce(velocity, ForceMode.Impulse);
 
         float yRot = Input.GetAxisRaw("Mouse X");
         Vector3 rotation = new Vector3(0f, yRot, 0f) * lookspeed;

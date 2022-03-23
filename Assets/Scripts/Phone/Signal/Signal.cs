@@ -112,18 +112,18 @@ public class Signal
     public int PacketLoss(int inputCount, int countOfUsers = 1)
     {
         p = (float)(countOfUsers / 256.0);
-        step = (float)(2 / (System.Math.Pow((float)(SKOTime(inputCount) / 10.0), 2) + System.Math.Pow((float)(SKOServ(inputCount) / 10.0), 2)) * Nb);
+        step = (float)((2 * Nb )/ (System.Math.Pow((float)(SKOTime(inputCount) / 10.0), 2) + System.Math.Pow((float)(SKOServ(inputCount) / 10.0), 2)) );
         PL = ((float)((1 - p) / (1 - System.Math.Pow(p, step + 1)) * System.Math.Pow(p, step)));
         return System.Convert.ToInt32(PL*100);
     }
 
     private float SKOTime(int inputCount)
     {
-        CountTime[DontTouchTime++] = inputCount; 
+        CountTime[DontTouchTime++] = inputCount;
         sum=0;
         for (int i=0; i < 10; i++) 
         { 
-            sum += CountTime[i]; 
+            sum += CountTime[i];
         }
         AverValue = (float)(sum / 10.0);
         SumDev = 0;
@@ -132,7 +132,7 @@ public class Signal
             SumDev += System.Math.Pow((CountTime[i] - AverValue), 2); 
         }
         SKO = (float)System.Math.Sqrt(SumDev/10.0);
-        if (DontTouchTime == 9) { DontTouchTime = 0; }
+        if (DontTouchTime == 10) { DontTouchTime = 0; }
         return SKO;
     }
 
@@ -151,7 +151,7 @@ public class Signal
             SumDev += System.Math.Pow((CountServ[i] - AverValue), 2); 
         }
         SKO = (float)System.Math.Sqrt(SumDev / 10.0);
-        if (DontTouchTimeServ == 9) { DontTouchTimeServ = 0; }
+        if (DontTouchTimeServ == 10) { DontTouchTimeServ = 0; }
         return SKO;
     }
 

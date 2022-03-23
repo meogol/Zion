@@ -13,7 +13,7 @@ public class TestSuite
     private int received;
     private int expect;
     private int countUsers;
-    private int[] CountTime = new int[10] {50, 50, 50, 50, 50, 50, 50, 50, 50, 50 };
+    private int[] CountTime = new int[10] {50, 45, 67, 83, 15, 72, 34, 19, 82, 46 };
     [Test]
     public void TestPowerSignalWithoutCollision()
     {
@@ -66,7 +66,7 @@ public class TestSuite
         {
             received = signal.PacketLoss(CountTime[i], countUsers);
         }
-        expect = 41;
+        expect = 37;
         Assert.AreEqual(expect, received);
     }
 }

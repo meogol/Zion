@@ -106,10 +106,8 @@ public class CellComm : MonoBehaviour
     public float Distance—alculation(GameObject phone, GameObject tower)
     {
         Vector3 vectorDistance = tower.transform.position - phone.transform.position;
-        float distance = Mathf.Sqrt(vectorDistance.x * vectorDistance.x +
-                                    vectorDistance.y * vectorDistance.y +
-                                    vectorDistance.z * vectorDistance.z);
-        return distance;
+
+        return vectorDistance.magnitude;
     }
 
     public float GetPower(GameObject phone, GameObject tower)
@@ -148,7 +146,7 @@ public class CellComm : MonoBehaviour
                 //Debug.Log(bufferPing);
                 text.text = $"{signal.GetNetIndexator()}\n{signal.speed} {signal.signalType}\n_____________\n" +
                     $"{device}\n\nConnected to {sphereObj.name}\n\n" +
-                     $"Signal:\n {signal.power} dBm\n\nCollisions:\n{signalLossCount[sphereObj.name]}" + 
+                     $"Signal:\n {signal.power} dBm\n\nSignal loss:\n{signalLossCount[sphereObj.name]}" + 
                      $"\nPing:\n {bufferPing}";
                 
             }
@@ -169,17 +167,13 @@ public class CellComm : MonoBehaviour
         }
     }
 
-    
-
     public float NewShoot(Vector3 position, GameObject tower)
     {
         float signalLoss = 0;
         RaycastHit[] allHits;
         Vector3 vectorDistance = tower.transform.position - position;
 
-        allHits = Physics.RaycastAll(position, vectorDistance, mask);
-
-
+        allHits = Physics.RaycastAll(position, vectorDistance, vectorDistance.magnitude, mask);
 
         Array.Sort(allHits, CellComm.CompareByDictance);
 
@@ -278,33 +272,6 @@ public class CellComm : MonoBehaviour
     {
         return hit1.distance.CompareTo(hit2.distance);
     }
-
-    public int[] ShootRecursion(Vector3 position, GameObject tower)
-    {
-        int[] collisions = {0, 0, 0};
-        Vector3 vectorDistance = tower.transform.position - position;
-        float signalLoss = 0;
-
-        if (Physics.Raycast(position, vectorDistance, out RaycastHit _hit, 1000f, mask))
-        {
-            /*
-            if (_hit.collider.tag == "Building")
-            {
-                collisions++;
-                vectorDistance = tower.transform.position - _hit.point;
-
-                position = _hit.point + (vectorDistance
-                            / (Math.Max(vectorDistance.x, Math.Max(vectorDistance.y, vectorDistance.z))));
-                collisions += Shoot(position, tower);
-            }*/
-
-            
-        }
-
-
-        return collisions;
-    }
-
 
     private double ToCalculateDelay()
     {

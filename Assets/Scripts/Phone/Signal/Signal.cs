@@ -82,7 +82,6 @@ public class Signal
         float signalPower = 15 * Mathf.Log10( powerOfTower * x) + 30 - signalLoss;//���� �������
 
         Debug.Log(signalLoss);
-        Debug.Log(radius);
         
 
 

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.17686915, g: 0.22140095, b: 0.30368757, a: 1}
+  m_IndirectSpecularColor: {r: 0.17686951, g: 0.22140147, b: 0.30368865, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -123,255 +123,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1001 &504172606
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 2122821135771130, guid: ebb2664204d2c53469765d3969afb976, type: 3}
-      propertyPath: m_TagString
-      value: Office
-      objectReference: {fileID: 0}
-    - target: {fileID: 669052393933773400, guid: ebb2664204d2c53469765d3969afb976, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 761461482606906634, guid: ebb2664204d2c53469765d3969afb976, type: 3}
-      propertyPath: m_TagString
-      value: Office
-      objectReference: {fileID: 0}
-    - target: {fileID: 1016349533725302672, guid: ebb2664204d2c53469765d3969afb976, type: 3}
-      propertyPath: m_TagString
-      value: Office
-      objectReference: {fileID: 0}
-    - target: {fileID: 1029642135989458673, guid: ebb2664204d2c53469765d3969afb976, type: 3}
-      propertyPath: m_TagString
-      value: Office
-      objectReference: {fileID: 0}
-    - target: {fileID: 1034504260276301605, guid: ebb2664204d2c53469765d3969afb976, type: 3}
-      propertyPath: m_TagString
-      value: Office
-      objectReference: {fileID: 0}
-    - target: {fileID: 1139893170330122147, guid: ebb2664204d2c53469765d3969afb976, type: 3}
-      propertyPath: m_RootOrder
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1139893170330122147, guid: ebb2664204d2c53469765d3969afb976, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1139893170330122147, guid: ebb2664204d2c53469765d3969afb976, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1139893170330122147, guid: ebb2664204d2c53469765d3969afb976, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1139893170330122147, guid: ebb2664204d2c53469765d3969afb976, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1139893170330122147, guid: ebb2664204d2c53469765d3969afb976, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1139893170330122147, guid: ebb2664204d2c53469765d3969afb976, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1139893170330122147, guid: ebb2664204d2c53469765d3969afb976, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1139893170330122147, guid: ebb2664204d2c53469765d3969afb976, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1139893170330122147, guid: ebb2664204d2c53469765d3969afb976, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1139893170330122147, guid: ebb2664204d2c53469765d3969afb976, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1146800233625518269, guid: ebb2664204d2c53469765d3969afb976, type: 3}
-      propertyPath: m_TagString
-      value: Office
-      objectReference: {fileID: 0}
-    - target: {fileID: 1254414127066690095, guid: ebb2664204d2c53469765d3969afb976, type: 3}
-      propertyPath: m_TagString
-      value: Office
-      objectReference: {fileID: 0}
-    - target: {fileID: 1472091226115411242, guid: ebb2664204d2c53469765d3969afb976, type: 3}
-      propertyPath: m_TagString
-      value: Corridor
-      objectReference: {fileID: 0}
-    - target: {fileID: 1673150065056393468, guid: ebb2664204d2c53469765d3969afb976, type: 3}
-      propertyPath: m_TagString
-      value: Corridor
-      objectReference: {fileID: 0}
-    - target: {fileID: 2635737811178983321, guid: ebb2664204d2c53469765d3969afb976, type: 3}
-      propertyPath: m_TagString
-      value: Office
-      objectReference: {fileID: 0}
-    - target: {fileID: 2824982139522565466, guid: ebb2664204d2c53469765d3969afb976, type: 3}
-      propertyPath: m_TagString
-      value: Office
-      objectReference: {fileID: 0}
-    - target: {fileID: 3186003377386319128, guid: ebb2664204d2c53469765d3969afb976, type: 3}
-      propertyPath: m_TagString
-      value: Office
-      objectReference: {fileID: 0}
-    - target: {fileID: 3346691334360326416, guid: ebb2664204d2c53469765d3969afb976, type: 3}
-      propertyPath: m_Size.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3346691334360326416, guid: ebb2664204d2c53469765d3969afb976, type: 3}
-      propertyPath: m_Center.z
-      value: -0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 3360495606006938396, guid: ebb2664204d2c53469765d3969afb976, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3530228758904639833, guid: ebb2664204d2c53469765d3969afb976, type: 3}
-      propertyPath: m_TagString
-      value: Office
-      objectReference: {fileID: 0}
-    - target: {fileID: 3634466446075005912, guid: ebb2664204d2c53469765d3969afb976, type: 3}
-      propertyPath: m_TagString
-      value: Office
-      objectReference: {fileID: 0}
-    - target: {fileID: 4080198016641030059, guid: ebb2664204d2c53469765d3969afb976, type: 3}
-      propertyPath: m_TagString
-      value: Office
-      objectReference: {fileID: 0}
-    - target: {fileID: 4126014302550830765, guid: ebb2664204d2c53469765d3969afb976, type: 3}
-      propertyPath: m_TagString
-      value: Office
-      objectReference: {fileID: 0}
-    - target: {fileID: 4590659075688946329, guid: ebb2664204d2c53469765d3969afb976, type: 3}
-      propertyPath: m_TagString
-      value: Office
-      objectReference: {fileID: 0}
-    - target: {fileID: 5214141805616257754, guid: ebb2664204d2c53469765d3969afb976, type: 3}
-      propertyPath: m_TagString
-      value: Office
-      objectReference: {fileID: 0}
-    - target: {fileID: 5412331051992976836, guid: ebb2664204d2c53469765d3969afb976, type: 3}
-      propertyPath: m_TagString
-      value: Office
-      objectReference: {fileID: 0}
-    - target: {fileID: 5935271774092712023, guid: ebb2664204d2c53469765d3969afb976, type: 3}
-      propertyPath: m_TagString
-      value: Corridor
-      objectReference: {fileID: 0}
-    - target: {fileID: 5935787176328537278, guid: ebb2664204d2c53469765d3969afb976, type: 3}
-      propertyPath: m_TagString
-      value: Office
-      objectReference: {fileID: 0}
-    - target: {fileID: 5976116114629992768, guid: ebb2664204d2c53469765d3969afb976, type: 3}
-      propertyPath: m_Size.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5976116114629992768, guid: ebb2664204d2c53469765d3969afb976, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5976116114629992768, guid: ebb2664204d2c53469765d3969afb976, type: 3}
-      propertyPath: m_Center.z
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 6043125979200385793, guid: ebb2664204d2c53469765d3969afb976, type: 3}
-      propertyPath: m_TagString
-      value: Office
-      objectReference: {fileID: 0}
-    - target: {fileID: 6061892368953082819, guid: ebb2664204d2c53469765d3969afb976, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 975.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 6061892368953082819, guid: ebb2664204d2c53469765d3969afb976, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 18.4
-      objectReference: {fileID: 0}
-    - target: {fileID: 6061892368953082819, guid: ebb2664204d2c53469765d3969afb976, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 1929
-      objectReference: {fileID: 0}
-    - target: {fileID: 6434199923860394854, guid: ebb2664204d2c53469765d3969afb976, type: 3}
-      propertyPath: m_TagString
-      value: Corridor
-      objectReference: {fileID: 0}
-    - target: {fileID: 6445777402480009563, guid: ebb2664204d2c53469765d3969afb976, type: 3}
-      propertyPath: m_TagString
-      value: Office
-      objectReference: {fileID: 0}
-    - target: {fileID: 6702323831126276087, guid: ebb2664204d2c53469765d3969afb976, type: 3}
-      propertyPath: m_TagString
-      value: Office
-      objectReference: {fileID: 0}
-    - target: {fileID: 6747325967882984403, guid: ebb2664204d2c53469765d3969afb976, type: 3}
-      propertyPath: m_TagString
-      value: Office
-      objectReference: {fileID: 0}
-    - target: {fileID: 6842786676854912408, guid: ebb2664204d2c53469765d3969afb976, type: 3}
-      propertyPath: m_TagString
-      value: Office
-      objectReference: {fileID: 0}
-    - target: {fileID: 6993368102633000441, guid: ebb2664204d2c53469765d3969afb976, type: 3}
-      propertyPath: m_TagString
-      value: Office
-      objectReference: {fileID: 0}
-    - target: {fileID: 7047457535828795823, guid: ebb2664204d2c53469765d3969afb976, type: 3}
-      propertyPath: m_Name
-      value: Scene 02
-      objectReference: {fileID: 0}
-    - target: {fileID: 7137384840233821598, guid: ebb2664204d2c53469765d3969afb976, type: 3}
-      propertyPath: m_TagString
-      value: Office
-      objectReference: {fileID: 0}
-    - target: {fileID: 7315279011048965247, guid: ebb2664204d2c53469765d3969afb976, type: 3}
-      propertyPath: m_TagString
-      value: Office
-      objectReference: {fileID: 0}
-    - target: {fileID: 7341249273821191871, guid: ebb2664204d2c53469765d3969afb976, type: 3}
-      propertyPath: m_TagString
-      value: Office
-      objectReference: {fileID: 0}
-    - target: {fileID: 7828861514656961905, guid: ebb2664204d2c53469765d3969afb976, type: 3}
-      propertyPath: m_TagString
-      value: Office
-      objectReference: {fileID: 0}
-    - target: {fileID: 7884061567079396311, guid: ebb2664204d2c53469765d3969afb976, type: 3}
-      propertyPath: m_TagString
-      value: Office
-      objectReference: {fileID: 0}
-    - target: {fileID: 7991655577025758962, guid: ebb2664204d2c53469765d3969afb976, type: 3}
-      propertyPath: m_TagString
-      value: Office
-      objectReference: {fileID: 0}
-    - target: {fileID: 8074211711232242718, guid: ebb2664204d2c53469765d3969afb976, type: 3}
-      propertyPath: m_TagString
-      value: Office
-      objectReference: {fileID: 0}
-    - target: {fileID: 8561360635073019041, guid: ebb2664204d2c53469765d3969afb976, type: 3}
-      propertyPath: m_TagString
-      value: Office
-      objectReference: {fileID: 0}
-    - target: {fileID: 8941943443644036994, guid: ebb2664204d2c53469765d3969afb976, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8968070144976803383, guid: ebb2664204d2c53469765d3969afb976, type: 3}
-      propertyPath: m_TagString
-      value: Office
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: ebb2664204d2c53469765d3969afb976, type: 3}
 --- !u!850595691 &1293265836
 LightingSettings:
   m_ObjectHideFlags: 0
@@ -433,3 +184,60 @@ LightingSettings:
   m_PVRFilteringAtrousPositionSigmaDirect: 0.5
   m_PVRFilteringAtrousPositionSigmaIndirect: 2
   m_PVRFilteringAtrousPositionSigmaAO: 1
+--- !u!1001 &1690478344
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1139893170330122147, guid: ebb2664204d2c53469765d3969afb976, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1139893170330122147, guid: ebb2664204d2c53469765d3969afb976, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1139893170330122147, guid: ebb2664204d2c53469765d3969afb976, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1139893170330122147, guid: ebb2664204d2c53469765d3969afb976, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1139893170330122147, guid: ebb2664204d2c53469765d3969afb976, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1139893170330122147, guid: ebb2664204d2c53469765d3969afb976, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1139893170330122147, guid: ebb2664204d2c53469765d3969afb976, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1139893170330122147, guid: ebb2664204d2c53469765d3969afb976, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1139893170330122147, guid: ebb2664204d2c53469765d3969afb976, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1139893170330122147, guid: ebb2664204d2c53469765d3969afb976, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1139893170330122147, guid: ebb2664204d2c53469765d3969afb976, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7047457535828795823, guid: ebb2664204d2c53469765d3969afb976, type: 3}
+      propertyPath: m_Name
+      value: Scene 02
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: ebb2664204d2c53469765d3969afb976, type: 3}

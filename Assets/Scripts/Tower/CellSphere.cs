@@ -11,8 +11,12 @@ public class CellSphere : MonoBehaviour
     void Start()
     {
 
+        if (obj.name == "Sphere1")
+        {
+            addConnection(GameObject.Find("PhoneText"));
+        }
 
-        addConnection(GameObject.Find("PhoneText"));
+        
         /*
          * Добавление телефонов
          *
